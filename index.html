@@ -92,15 +92,15 @@ ru:{wm:"Водяные знаки",rew:"Награды",rev:"Отзывы",from:
  offline:"Магазин не загрузился. Откройте его из бота (кнопка магазина), проверьте адрес API в index.html и что бот запущен.",name:"Имя для вашего водяного знака",namePh:"например, Velocity",nameReq:"Введите имя",done:"Оплачено! Бот пришлёт сообщение.",ex:"Звёзды ⇄ Кредиты",exInfo:"Обменяйте звёзды на кредиты. В больших пакетах есть бонусные кредиты.",bonus:"бонус",exch:"Обменять",exDone:"Кредиты зачислены",saved:"Отзыв сохранён",copy:"Скопировано",disc:"скидка",avg:"средняя"}};
 let L = localStorage.getItem("l") || (tg.initDataUnsafe?.user?.language_code === "ru" ? "ru" : "en");
 const t = k => T[L][k] || k;
-let S = null, P = [], view = "home", R = {reviews: [], avg: null};
+let lastErr = "", S = null, P = [], view = "home", R = {reviews: [], avg: null};
 const $ = s => document.querySelector(s), app = $("#app");
 
 function toast(m){const e=$("#toast");e.textContent=m;e.classList.add("on");setTimeout(()=>e.classList.remove("on"),2200)}
 async function api(a, d = {}) {
   try {
     const r = await fetch(API, {method:"POST", headers:{"Content-Type":"application/json","ngrok-skip-browser-warning":"1"}, body:JSON.stringify({a, init:tg.initData, ...d})});
-    const j = await r.json(); if (j.state) { S = j.state; P = S.products; } if (j.err) toast(t(j.err)); return j;
-  } catch (e) { toast("Network error"); return {}; }
+    const j = await r.json(); if (j.state) { S = j.state; P = S.products; } if (j.err) { lastErr = "Server answered: " + j.err; toast(t(j.err)); } return j;
+  } catch (e) { lastErr = "Network error (" + API + "): " + e.message; toast("Network error"); return {}; }
 }
 const disc = () => Math.min(90, S.shop + S.pers);
 const price = (p, cur) => Math.max(1, Math.ceil(p.stars * (cur === "cr" ? S.rate : 1) * (100 - disc()) / 100));
@@ -115,7 +115,7 @@ function go(v) { enter(); view = v; draw(); scrollTo(0, 0); }
 function draw() {
   $("#en").classList.toggle("on", L === "en"); $("#ru").classList.toggle("on", L === "ru");
   document.documentElement.lang = L;
-  if (!S) { app.innerHTML = `<p class="note">${t("offline")}</p>`; return; }
+  if (!S) { app.innerHTML = `<p class="note">${t("offline")}<br><br><small>${esc(lastErr)}</small></p>`; return; }
   ({home, wm, rew, rev, ex})[view]();
 }
 
