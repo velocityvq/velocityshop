@@ -19,8 +19,8 @@ h1{font-size:20px;font-weight:800;text-align:center;letter-spacing:-.02em;backgr
 .lang button.on{background:linear-gradient(135deg,var(--acc),var(--acc2));color:var(--ink)}
 button{font-family:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
 button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
-.big{display:block;width:100%;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:12px;color:var(--tx);transition:transform .2s,box-shadow .2s,border-color .2s}
-.big b{display:block;font-size:18px}.big span{color:var(--mut);font-size:13px}
+.big{display:flex;align-items:center;gap:14px;width:100%;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:12px;color:var(--tx);transition:transform .2s,box-shadow .2s,border-color .2s}
+.big b{display:block;font-size:17px}.big span{color:var(--mut);font-size:13px}.big div{min-width:0}
 .big.first{border-color:var(--acc);background:linear-gradient(135deg,#0e4a63,var(--card));animation:glow 3s ease-in-out infinite}
 .big:active,.item:active{transform:scale(.98)}
 @media(hover:hover){.big:hover,.item:hover{transform:translateY(-2px);box-shadow:0 8px 24px var(--glow);border-color:var(--acc)}}
@@ -58,6 +58,26 @@ input:focus,textarea:focus{border-color:var(--acc);box-shadow:0 0 0 3px var(--gl
 @keyframes shine{to{background-position:300% 0}}
 @keyframes glow{50%{box-shadow:0 0 26px var(--glow)}}
 @keyframes pulse{0%{box-shadow:0 0 0 0 #22d3ee88}70%,100%{box-shadow:0 0 0 12px #22d3ee00}}
+.ic{flex:none;width:50px;height:50px;border-radius:15px;display:grid;place-items:center;font-size:25px;font-style:normal;background:linear-gradient(135deg,#22d3ee33,#3b82f633);border:1px solid var(--line)}
+.big em{margin-left:auto;font-style:normal;color:var(--acc);font-size:24px;transition:transform .2s}.big:active em{transform:translateX(4px)}
+.hero{position:relative;overflow:hidden;border-radius:20px;padding:20px 18px;margin-bottom:14px;background:linear-gradient(135deg,#0e4a63,#0b2a55 60%,#0b2230);border:1px solid var(--line)}
+.hero::before,.hero::after{content:"";position:absolute;border-radius:50%;pointer-events:none}
+.hero::before{right:-40px;top:-40px;width:170px;height:170px;background:radial-gradient(circle,#22d3ee77,transparent 70%);animation:float 7s ease-in-out infinite alternate}
+.hero::after{left:-30px;bottom:-60px;width:150px;height:150px;background:radial-gradient(circle,#3b82f677,transparent 70%);animation:float 9s ease-in-out infinite alternate-reverse}
+.hero>*{position:relative}.hero h2{font-size:22px;line-height:1.2;margin:6px 0 4px}.hero p{color:#b7dbe6;font-size:13px}
+.badge{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--acc)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}.chips span{font-size:12px;border:1px solid #22d3ee55;background:#04121c88;border-radius:999px;padding:4px 10px}
+.sec{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--mut);margin:18px 0 8px}
+.links{display:flex;flex-wrap:wrap;gap:8px}.links button{background:var(--card);border:1px solid var(--line);color:var(--tx);border-radius:999px;padding:8px 13px;font-size:13px;transition:transform .15s,border-color .2s}.links button:active{transform:scale(.95)}
+.vw{position:relative}.vw::after{content:"";position:absolute;inset:auto 0 0 0;height:40%;background:linear-gradient(transparent,var(--card));pointer-events:none}
+.corner{position:absolute;left:8px;top:8px;z-index:1}
+.empty{text-align:center;padding:40px 10px}.empty .ic{margin:0 auto 12px;width:64px;height:64px;font-size:30px;animation:float 3s ease-in-out infinite alternate}
+.wheelwrap{position:relative;width:176px;margin:14px auto 6px}
+.wheel{position:relative;width:176px;height:176px;border-radius:50%;border:4px solid var(--bg);outline:2px solid var(--line);background:conic-gradient(#22d3ee 0 72deg,#3b82f6 72deg 144deg,#2ee6a6 144deg 216deg,#a78bfa 216deg 288deg,#f472b6 288deg 360deg);box-shadow:0 0 34px var(--glow);transition:transform 3.2s cubic-bezier(.12,.7,.1,1)}
+.wheel span{position:absolute;left:50%;top:50%;width:36px;margin:-9px 0 0 -18px;text-align:center;font-weight:800;font-size:13px;color:var(--ink)}
+.wheel::after{content:"";position:absolute;inset:50% auto auto 50%;width:26px;height:26px;margin:-13px 0 0 -13px;border-radius:50%;background:var(--bg);border:2px solid var(--acc)}
+.ptr{position:absolute;left:50%;top:-14px;transform:translateX(-50%);z-index:2;font-size:22px;color:var(--tx);filter:drop-shadow(0 2px 4px #0009)}
+@keyframes float{to{transform:translate(-18px,20px) scale(1.15)}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -81,7 +101,7 @@ en:{wm:"Watermarks",rew:"Rewards",rev:"Reviews",from:"prices starting from",back
  enter:"Friend's code",apply:"Apply",refInfo:"Enter a friend's code to get 10% off your next order.",refOn:"10% referral discount ready",
  revLock:"Reviews unlock after your first purchase.",rating:"Rating (0.0–10.0)",text:"Short text (optional)",send:"Send review",none:"No reviews yet",
  bought:"Buy something first",used:"Already used",invalid:"Invalid input",auth:"Open this app from the bot",
- offline:"Shop not loaded. Open it from the bot (Discover my shop button), and check that the API address in index.html is correct and the bot is running.",name:"Name for your watermark",namePh:"e.g. Velocity",nameReq:"Please enter a name",done:"Paid! You'll get a message from the bot.",saved:"Review saved",copy:"Copied",disc:"discount",avg:"average"},
+ offline:"Shop not loaded. Open it from the bot (Discover my shop button), and check that the API address in index.html is correct and the bot is running.",heroB:"After Effects",heroT:"Animated text watermarks",heroS:"Your name, animated and delivered right here in the chat.",f1:"🎞 PC .mov + mobile .mp4",f2:"✏️ Your own name",f3:"⭐ Pay with Stars",follow:"Follow us",emptyT:"New watermarks are on the way",name:"Name for your watermark",namePh:"e.g. Velocity",nameReq:"Please enter a name",done:"Paid! You'll get a message from the bot.",saved:"Review saved",copy:"Copied",disc:"discount",avg:"average"},
 ru:{wm:"Водяные знаки",rew:"Награды",rev:"Отзывы",from:"цены от",back:"← В главное меню",order:"Заказать",soon:"Скоро: здесь появятся товары.",
  fmt:"Формат",pc:"ПК (mov)",mob:"Мобильный (mp4)",both:"Оба",note:"⏳ Заказ может занять до 3 дней",buy:"Заказать",
  off:"скидка на весь магазин",
@@ -89,7 +109,7 @@ ru:{wm:"Водяные знаки",rew:"Награды",rev:"Отзывы",from:
  enter:"Код друга",apply:"Применить",refInfo:"Введите код друга и получите 10% скидку на следующий заказ.",refOn:"Скидка 10% по коду готова",
  revLock:"Отзывы доступны после первой покупки.",rating:"Оценка (0.0–10.0)",text:"Короткий текст (необязательно)",send:"Отправить отзыв",none:"Отзывов пока нет",
  bought:"Сначала сделайте покупку",used:"Уже использовано",invalid:"Неверный ввод",auth:"Откройте приложение из бота",
- offline:"Магазин не загрузился. Откройте его из бота (кнопка магазина), проверьте адрес API в index.html и что бот запущен.",name:"Имя для вашего водяного знака",namePh:"например, Velocity",nameReq:"Введите имя",done:"Оплачено! Бот пришлёт сообщение.",saved:"Отзыв сохранён",copy:"Скопировано",disc:"скидка",avg:"средняя"}};
+ offline:"Магазин не загрузился. Откройте его из бота (кнопка магазина), проверьте адрес API в index.html и что бот запущен.",heroB:"After Effects",heroT:"Анимированные водяные знаки",heroS:"Ваше имя в анимации, доставка прямо в этот чат.",f1:"🎞 ПК .mov + мобильный .mp4",f2:"✏️ Ваше имя",f3:"⭐ Оплата звёздами",follow:"Мы в соцсетях",emptyT:"Новые водяные знаки скоро появятся",name:"Имя для вашего водяного знака",namePh:"например, Velocity",nameReq:"Введите имя",done:"Оплачено! Бот пришлёт сообщение.",saved:"Отзыв сохранён",copy:"Скопировано",disc:"скидка",avg:"средняя"}};
 let L = localStorage.getItem("l") || (tg.initDataUnsafe?.user?.language_code === "ru" ? "ru" : "en");
 const t = k => T[L][k] || k;
 let lastErr = "", S = null, P = [], view = "home", R = {reviews: [], avg: null};
@@ -119,20 +139,26 @@ function draw() {
   ({home, wm, rew, rev})[view]();
 }
 
+const LINKS = [["🎵 ᴠᴇʟᴏᴄɪᴛʏ", "https://www.tiktok.com/@velocity.vq"], ["🎵 ᴄᴏᴍᴇᴛ", "https://www.tiktok.com/@comet.szc"], ["📢 ᴠᴇʟᴏᴄɪᴛʏ x ᴄᴏᴍᴇᴛ", "https://t.me/velocityvq"],
+  ["💬 ᴠᴇʟᴏᴄɪᴛʏ чат", "https://t.me/velocitychat"], ["🎬 clips velocity", "https://t.me/velocityclips"], ["🎮 Discord", "https://discord.gg/HxueU94Ygv"]];
+const card = (ic, tt, sub, fn, cls = "") => `<button class="big ${cls}" onclick="${fn}"><i class="ic">${ic}</i><div><b>${tt}</b><span>${sub}</span></div><em>›</em></button>`;
 function home() {
   const min = P.length ? Math.min(...P.map(price)) : 0;
   app.innerHTML = `
-  <button class="big first" onclick="go('wm')"><b>🎬 ${t("wm")}</b><span>${P.length ? `${t("from")} ${min} ⭐` : t("soon")}</span></button>
-  <button class="big" onclick="go('rew')"><b>🎁 ${t("rew")}</b><span>${t("wheel")} · ${t("ref")}</span></button>
-  <button class="big" onclick="openRev()"><b>⭐ ${t("rev")}</b><span>${R.avg != null ? `${R.avg} / 10 ${t("avg")}` : t("none")}</span></button>`;
+  <div class="hero"><span class="badge">${t("heroB")}</span><h2>${t("heroT")}</h2><p>${t("heroS")}</p><div class="chips"><span>${t("f1")}</span><span>${t("f2")}</span><span>${t("f3")}</span></div></div>
+  ${card("🎬", t("wm"), P.length ? `${t("from")} ${min} ⭐` : t("soon"), "go('wm')", "first")}
+  ${card("🎁", t("rew"), `${t("wheel")} · ${t("ref")}`, "go('rew')")}
+  ${card("⭐", t("rev"), R.avg != null ? `${R.avg} / 10 ${t("avg")}` : t("none"), "openRev()")}
+  <p class="sec">${t("follow")}</p><div class="links">${LINKS.map(([n, u]) => `<button onclick="openLink('${u}')">${n}</button>`).join("")}</div>`;
 }
+const openLink = u => u.includes("t.me/") ? tg.openTelegramLink(u) : tg.openLink(u);
 
 function wm() {
   app.innerHTML = back() + (disc() ? `<p style="margin-bottom:10px"><span class="tag">−${disc()}%</span> <span class="mut">${t("off")}</span></p>` : "") +
   (P.length ? `<div class="grid">${P.map(p => { const s = price(p), o = p.stars;
-    return `<div class="item"><video src="${vid(p)}" autoplay muted loop playsinline></video><div><h3>${title(p)}</h3>
+    return `<div class="item"><div class="vw" style="padding:0;display:block;flex:none"><video src="${vid(p)}" autoplay muted loop playsinline></video>${disc() ? `<span class="tag corner">−${disc()}%</span>` : ""}</div><div><h3>${title(p)}</h3>
     <span>${disc() ? `<span class="old">${o} ⭐</span> ` : ""}<b>${s} ⭐</b></span>
-    <button class="btn" onclick="openOrder('${p.id}')">${t("order")}</button></div></div>`; }).join("")}</div>` : `<p class="mut">${t("soon")}</p>`);
+    <button class="btn" onclick="openOrder('${p.id}')">${t("order")}</button></div></div>`; }).join("")}</div>` : `<div class="empty"><i class="ic">🎞</i><p class="mut">${t("emptyT")}</p></div>`);
 }
 
 function openOrder(id) {
@@ -157,15 +183,18 @@ function openOrder(id) {
 
 function rew() {
   const wLeft = S.wexp > Date.now() / 1000;
-  app.innerHTML = back() + `  <div class="box"><h2>🎡 ${t("wheel")}</h2><p class="mut">${t("wheelInfo")}</p><p id="wres" style="font-size:22px;font-weight:800;margin-top:6px">${S.wheel_used ? (wLeft ? `${t("active")}: −${S.wp}% ${t("until")} ${fmtDate(S.wexp)}` : "") : ""}</p>
+  app.innerHTML = back() + `  <div class="box"><h2>🎡 ${t("wheel")}</h2><p class="mut">${t("wheelInfo")}</p><div class="wheelwrap"><span class="ptr">▼</span><div class="wheel" id="wh" style="transform:rotate(${S.wheel_used ? 360 - ([10,20,30,40,50].indexOf(S.wp) * 72 + 36) : 0}deg)">${[10,20,30,40,50].map((p, i) => `<span style="transform:rotate(${i * 72 + 36}deg) translateY(-62px)">${p}%</span>`).join("")}</div></div>
+  <p id="wres" style="text-align:center;min-height:28px;font-size:18px;font-weight:800;margin-top:6px">${S.wheel_used ? (wLeft ? `${t("active")}: −${S.wp}% ${t("until")} ${fmtDate(S.wexp)}` : "") : ""}</p>
    <button class="btn ${S.wheel_used ? "" : "pulse"}" style="margin-top:8px" ${S.wheel_used ? "disabled" : ""} onclick="spin()">${t("spin")}</button></div>
   <div class="box"><h2>🤝 ${t("ref")}</h2><p class="mut">${t("refInfo")}</p>
    <div class="row"><input readonly value="${S.code}"><button class="btn alt" style="width:auto;margin:0" onclick="navigator.clipboard?.writeText('${S.code}');toast(t('copy'))">⧉</button></div>
    ${S.ref_by ? `<p class="mut" style="margin-top:8px">${S.ref ? "✅ " + t("refOn") : ""}</p>` : `<div class="row"><input id="rc" placeholder="${t("enter")}"><button class="btn" style="width:auto;margin:0" onclick="applyRef()">${t("apply")}</button></div>`}</div>`;
 }
-async function spin(){
-  const e=$("#wres");let i=0;const iv=setInterval(()=>e.textContent="🎡 "+[10,20,30,40,50][i++%5]+"%",90);
-  const j=await api("wheel");setTimeout(()=>{clearInterval(iv);draw()},1100);
+async function spin() {
+  const j = await api("wheel"); if (j.err) return draw();
+  const i = [10, 20, 30, 40, 50].indexOf(j.won);
+  $("#wh").style.transform = `rotate(${360 * 5 + 360 - (i * 72 + 36)}deg)`;
+  setTimeout(() => { toast("🎉 −" + j.won + "%"); draw(); }, 3400);
 }
 async function applyRef(){const j=await api("ref",{code:$("#rc").value});if(!j.err)toast("✅");draw()}
 
