@@ -1,0 +1,199 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>velocity shop</title>
+<script src="https://telegram.org/js/telegram-web-app.js"></script>
+<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#0c1022;--card:#161d3a;--line:#27315e;--tx:#eef1ff;--mut:#8d98c9;--acc:#4f8cff;--hot:#ff5c7a;--ok:#35d49a}
+*{box-sizing:border-box;margin:0}
+body{background:var(--bg);color:var(--tx);font:15px/1.4 Sora,system-ui,sans-serif;padding:env(safe-area-inset-top) 14px calc(24px + env(safe-area-inset-bottom))}
+header{display:grid;grid-template-columns:96px 1fr 96px;align-items:center;padding:14px 0}
+h1{font-size:20px;font-weight:800;text-align:center;letter-spacing:-.02em}
+.lang{display:flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;width:max-content}
+.lang button{border:0;background:none;color:var(--mut);padding:6px 10px;font:600 12px Sora,sans-serif}
+.lang button.on{background:var(--acc);color:#fff}
+button{font-family:inherit;cursor:pointer}
+button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+.big{display:block;width:100%;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:12px;color:var(--tx)}
+.big b{display:block;font-size:18px}.big span{color:var(--mut);font-size:13px}
+.big.first{border-color:var(--acc);background:linear-gradient(135deg,#1b2a66,var(--card))}
+.back{background:none;border:0;color:var(--acc);font:600 14px Sora,sans-serif;padding:6px 0 14px}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.item{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column}
+.item video{width:100%;aspect-ratio:1;object-fit:cover;background:#000}
+.item div{padding:10px;display:flex;flex-direction:column;gap:6px;flex:1}
+.item h3{font-size:14px;font-weight:600}.old{color:var(--mut);text-decoration:line-through;font-size:12px}
+.btn{background:var(--acc);color:#fff;border:0;border-radius:10px;padding:10px;font-weight:600;font-size:14px;width:100%;margin-top:auto}
+.btn.alt{background:var(--line)}.btn:disabled{opacity:.5}
+.box{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px}
+.box h2{font-size:16px;margin-bottom:6px}.mut{color:var(--mut);font-size:13px}
+.row{display:flex;gap:8px;align-items:center;margin-top:8px}
+input,textarea{width:100%;background:var(--bg);border:1px solid var(--line);color:var(--tx);border-radius:10px;padding:10px;font:inherit}
+.tag{display:inline-block;background:var(--hot);color:#fff;border-radius:8px;padding:2px 8px;font-size:12px;font-weight:600}
+.perk{display:inline-block;border:1px solid var(--line);border-radius:8px;padding:3px 8px;margin:4px 4px 0 0;font-size:12px}.perk.done{border-color:var(--ok);color:var(--ok)}
+.sheet{position:fixed;inset:0;background:#000a;display:flex;align-items:flex-end;z-index:5}
+.sheet>div{background:var(--bg);border-top:1px solid var(--line);border-radius:20px 20px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom));width:100%;max-height:90vh;overflow:auto}
+.opt{display:flex;gap:8px;margin:8px 0}.opt label{flex:1;text-align:center;border:1px solid var(--line);border-radius:10px;padding:10px 4px;font-size:13px}
+.opt input{display:none}.opt input:checked+span{color:var(--acc);font-weight:800}.opt label:has(input:checked){border-color:var(--acc)}
+.note{background:#2a2410;border:1px solid #6b5a1f;color:#ffd978;border-radius:10px;padding:8px 10px;font-size:13px;margin:10px 0}
+.rev{border-top:1px solid var(--line);padding:10px 0}.rev b{color:var(--ok)}
+#toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);background:var(--tx);color:var(--bg);padding:10px 16px;border-radius:12px;font-weight:600;opacity:0;pointer-events:none;transition:opacity .2s;z-index:9}
+#toast.on{opacity:1}
+@media(prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+<header>
+  <div class="lang"><button id="en">EN</button><button id="ru">RU</button></div>
+  <h1>velocity shop</h1><span></span>
+</header>
+<main id="app"></main>
+<div id="toast"></div>
+<script>
+// ====== SET THIS to the public HTTPS address of your bot server (bot.py) ======
+const API = "https://matador-even-freeload.ngrok-free.dev/api";
+// ==============================================================================
+const tg = Telegram.WebApp; tg.ready(); tg.expand();
+const T = {
+en:{wm:"Watermarks",rew:"Rewards",rev:"Reviews",from:"prices starting from",back:"← Back to main menu",order:"Order",soon:"Coming soon: products will appear here.",
+ fmt:"Format",pay:"Pay with",pc:"PC (mov)",mob:"Mobile (mp4)",both:"Both",stars:"Stars",cr:"Credits (cr)",note:"⏳ Order might take up to 3 days",buy:"Order now",
+ off:"shop-wide discount",bal:"Balance",daily:"Daily login bonus",claim:"Claim",claimed:"Claimed. Come back tomorrow",streak:"Streak",days:"days",perks:"One-time streak perks",
+ wheel:"Welcome wheel",wheelInfo:"One free spin: win a 10–50% discount for 3 days.",spin:"Spin",active:"Your discount",until:"until",ref:"Friend referral",code:"Your code",
+ enter:"Friend's code",apply:"Apply",refInfo:"Enter a friend's code to get 10% off your next order.",refOn:"10% referral discount ready",games:"Minigames",left:"plays left today",
+ play:"Play",won:"You won",cr2:"cr",revLock:"Reviews unlock after your first purchase.",rating:"Rating (0.0–10.0)",text:"Short text (optional)",send:"Send review",none:"No reviews yet",
+ limit:"Daily limit reached",funds:"Not enough credits",bought:"Buy something first",used:"Already used",invalid:"Invalid input",claimed2:"Already claimed",auth:"Open this app from the bot",
+ name:"Name for your watermark",namePh:"e.g. Velocity",nameReq:"Please enter a name",done:"Paid! You'll get a message from the bot.",ex:"Stars ⇄ Credits",exInfo:"Exchange Stars for credits. Bigger packs include bonus credits.",bonus:"bonus",exch:"Exchange",exDone:"Credits added",saved:"Review saved",copy:"Copied",box:"Lucky box",dice:"Dice",scratch:"Scratch card",disc:"discount",avg:"average"},
+ru:{wm:"Водяные знаки",rew:"Награды",rev:"Отзывы",from:"цены от",back:"← В главное меню",order:"Заказать",soon:"Скоро: здесь появятся товары.",
+ fmt:"Формат",pay:"Оплата",pc:"ПК (mov)",mob:"Мобильный (mp4)",both:"Оба",stars:"Звёзды",cr:"Кредиты (cr)",note:"⏳ Заказ может занять до 3 дней",buy:"Заказать",
+ off:"скидка на весь магазин",bal:"Баланс",daily:"Ежедневный бонус",claim:"Забрать",claimed:"Получено. Приходите завтра",streak:"Серия",days:"дн.",perks:"Разовые бонусы за серию",
+ wheel:"Колесо приветствия",wheelInfo:"Один бесплатный спин: скидка 10–50% на 3 дня.",spin:"Крутить",active:"Ваша скидка",until:"до",ref:"Реферальный код",code:"Ваш код",
+ enter:"Код друга",apply:"Применить",refInfo:"Введите код друга и получите 10% скидку на следующий заказ.",refOn:"Скидка 10% по коду готова",games:"Мини-игры",left:"попыток сегодня",
+ play:"Играть",won:"Вы выиграли",cr2:"cr",revLock:"Отзывы доступны после первой покупки.",rating:"Оценка (0.0–10.0)",text:"Короткий текст (необязательно)",send:"Отправить отзыв",none:"Отзывов пока нет",
+ limit:"Дневной лимит исчерпан",funds:"Недостаточно кредитов",bought:"Сначала сделайте покупку",used:"Уже использовано",invalid:"Неверный ввод",claimed2:"Уже получено",auth:"Откройте приложение из бота",
+ name:"Имя для вашего водяного знака",namePh:"например, Velocity",nameReq:"Введите имя",done:"Оплачено! Бот пришлёт сообщение.",ex:"Звёзды ⇄ Кредиты",exInfo:"Обменяйте звёзды на кредиты. В больших пакетах есть бонусные кредиты.",bonus:"бонус",exch:"Обменять",exDone:"Кредиты зачислены",saved:"Отзыв сохранён",copy:"Скопировано",box:"Счастливая коробка",dice:"Кости",scratch:"Скретч-карта",disc:"скидка",avg:"средняя"}};
+let L = localStorage.getItem("l") || (tg.initDataUnsafe?.user?.language_code === "ru" ? "ru" : "en");
+const t = k => T[L][k] || k;
+let S = null, P = [], view = "home", R = {reviews: [], avg: null};
+const $ = s => document.querySelector(s), app = $("#app");
+
+function toast(m){const e=$("#toast");e.textContent=m;e.classList.add("on");setTimeout(()=>e.classList.remove("on"),2200)}
+async function api(a, d = {}) {
+  try {
+    const r = await fetch(API, {method:"POST", headers:{"Content-Type":"application/json"}, body:JSON.stringify({a, init:tg.initData, ...d})});
+    const j = await r.json(); if (j.state) { S = j.state; P = S.products; } if (j.err) toast(t(j.err)); return j;
+  } catch (e) { toast("Network error"); return {}; }
+}
+const disc = () => Math.min(90, S.shop + S.pers);
+const price = (p, cur) => Math.max(1, Math.ceil(p.stars * (cur === "cr" ? S.rate : 1) * (100 - disc()) / 100));
+const BASE = API.replace(/\/api$/, ""), vid = p => BASE + p.video;
+const title = p => p.title[L] || p.title.en;
+const fmtDate = ms => new Date(ms * 1000).toLocaleString(L === "ru" ? "ru" : "en", {day:"numeric", month:"short", hour:"2-digit", minute:"2-digit"});
+const back = () => `<button class="back" onclick="go('home')">${t("back")}</button>`;
+const backTo = (v, label) => `<button class="back" onclick="go('${v}')">← ${label}</button>`;
+function go(v) { view = v; draw(); scrollTo(0, 0); }
+
+function draw() {
+  $("#en").classList.toggle("on", L === "en"); $("#ru").classList.toggle("on", L === "ru");
+  document.documentElement.lang = L;
+  if (!S) { app.innerHTML = ""; return; }
+  ({home, wm, rew, games, rev, ex})[view]();
+}
+
+function home() {
+  const min = P.length ? Math.min(...P.map(p => price(p, "stars"))) : 0, minCr = P.length ? Math.min(...P.map(p => price(p, "cr"))) : 0;
+  app.innerHTML = `
+  <button class="big first" onclick="go('wm')"><b>🎬 ${t("wm")}</b><span>${P.length ? `${t("from")} ${min} ⭐ / ${minCr} cr` : t("soon")}</span></button>
+  <button class="big" onclick="go('rew')"><b>🎁 ${t("rew")}</b><span>${t("bal")}: ${S.credits} cr · ${t("streak")}: ${S.streak}</span></button>
+  <button class="big" onclick="go('ex')"><b>💱 ${t("ex")}</b><span>25 ⭐ → 1250 cr · 250 ⭐ → 13000 cr</span></button>
+  <button class="big" onclick="openRev()"><b>⭐ ${t("rev")}</b><span>${R.avg != null ? `${R.avg} / 10 ${t("avg")}` : t("none")}</span></button>`;
+}
+
+function wm() {
+  app.innerHTML = back() + (disc() ? `<p style="margin-bottom:10px"><span class="tag">−${disc()}%</span> <span class="mut">${t("off")}</span></p>` : "") +
+  (P.length ? `<div class="grid">${P.map(p => { const s = price(p, "stars"), c = price(p, "cr"), o = p.stars;
+    return `<div class="item"><video src="${vid(p)}" autoplay muted loop playsinline></video><div><h3>${title(p)}</h3>
+    <span>${disc() ? `<span class="old">${o} ⭐</span> ` : ""}<b>${s} ⭐</b> <span class="mut">/ ${c} cr</span></span>
+    <button class="btn" onclick="openOrder('${p.id}')">${t("order")}</button></div></div>`; }).join("")}</div>` : `<p class="mut">${t("soon")}</p>`);
+}
+
+function openOrder(id) {
+  const p = P.find(x => x.id === id), el = document.createElement("div"); el.className = "sheet";
+  el.innerHTML = `<div><h2 style="margin-bottom:8px">${title(p)}</h2>
+  <p class="mut">${t("name")}</p><input id="nm" maxlength="40" placeholder="${t("namePh")}" autocomplete="off" style="margin:6px 0 10px">
+  <p class="mut">${t("fmt")}</p><div class="opt">${[["pc","pc"],["mobile","mob"],["both","both"]].map(([v,k],i)=>`<label><input type="radio" name="f" value="${v}" ${i?"":"checked"}><span>${t(k)}</span></label>`).join("")}</div>
+  <p class="mut">${t("pay")}</p><div class="opt">${[["stars","stars"],["cr","cr"]].map(([v,k],i)=>`<label><input type="radio" name="c" value="${v}" ${i?"":"checked"}><span>${t(k)}</span></label>`).join("")}</div>
+  <p id="tot" style="font-size:20px;font-weight:800"></p><div class="note">${t("note")}</div>
+  <button class="btn" id="go">${t("buy")}</button><button class="btn alt" style="margin-top:8px" id="x">✕</button></div>`;
+  document.body.append(el);
+  const val = n => el.querySelector(`input[name=${n}]:checked`).value;
+  const upd = () => { const c = val("c"); $("#tot").textContent = price(p, c) + (c === "cr" ? " cr" : " ⭐"); };
+  el.addEventListener("change", upd); upd();
+  $("#x").onclick = () => el.remove();
+  $("#go").onclick = async () => {
+    const nm = $("#nm").value.trim(); if (!nm) return toast(t("nameReq"));
+    $("#go").disabled = true; const j = await api("order", {pid:id, fmt:val("f"), pay:val("c"), name:nm});
+    if (j.link) tg.openInvoice(j.link, st => { if (st === "paid") { toast(t("done")); el.remove(); } else $("#go").disabled = false; });
+    else if (j.done) { toast(t("done")); el.remove(); draw(); } else $("#go").disabled = false;
+  };
+}
+
+function rew() {
+  const wLeft = S.wexp > Date.now() / 1000;
+  app.innerHTML = back() + `<p class="mut" style="margin-bottom:10px">${t("bal")}: <b style="color:var(--tx)">${S.credits} cr</b></p>
+  <div class="box"><h2>📅 ${t("daily")}</h2><p class="mut">${t("streak")}: ${S.streak} ${t("days")} · +${S.next} cr</p>
+   <p class="mut" style="margin-top:8px">${t("perks")}</p>${Object.entries(S.perk_table).map(([d, c]) => `<span class="perk ${S.perks.includes(+d) ? "done" : ""}">${d} ${t("days")}: +${c} cr</span>`).join("")}
+   <button class="btn" style="margin-top:10px" ${S.claimed ? "disabled" : ""} onclick="claim()">${S.claimed ? t("claimed") : t("claim") + " +" + S.next + " cr"}</button></div>
+  <div class="box"><h2>🎡 ${t("wheel")}</h2><p class="mut">${t("wheelInfo")}</p><p id="wres" style="font-size:22px;font-weight:800;margin-top:6px">${S.wheel_used ? (wLeft ? `${t("active")}: −${S.wp}% ${t("until")} ${fmtDate(S.wexp)}` : "") : ""}</p>
+   <button class="btn" style="margin-top:8px" ${S.wheel_used ? "disabled" : ""} onclick="spin()">${t("spin")}</button></div>
+  <div class="box"><h2>🤝 ${t("ref")}</h2><p class="mut">${t("refInfo")}</p>
+   <div class="row"><input readonly value="${S.code}"><button class="btn alt" style="width:auto;margin:0" onclick="navigator.clipboard?.writeText('${S.code}');toast(t('copy'))">⧉</button></div>
+   ${S.ref_by ? `<p class="mut" style="margin-top:8px">${S.ref ? "✅ " + t("refOn") : ""}</p>` : `<div class="row"><input id="rc" placeholder="${t("enter")}"><button class="btn" style="width:auto;margin:0" onclick="applyRef()">${t("apply")}</button></div>`}</div>
+  <button class="big" onclick="go('games')"><b>🕹 ${t("games")}</b><span>${t("bal")}: ${S.credits} cr</span></button>`;
+}
+function ex() {
+  app.innerHTML = back() + `<p class="mut" style="margin-bottom:6px">${t("bal")}: <b style="color:var(--tx)">${S.credits} cr</b></p><p class="mut" style="margin-bottom:12px">${t("exInfo")}</p>
+  <div class="grid">${S.packs.map((p, i) => { const b = p.cr - p.stars * S.rate;
+    return `<div class="item"><div><h3>${p.stars} ⭐</h3><b style="font-size:18px">${p.cr} cr</b>${b > 0 ? `<span class="tag" style="width:max-content">+${b} ${t("bonus")}</span>` : ""}<button class="btn" onclick="buyPack(${i})">${t("exch")}</button></div></div>`; }).join("")}</div>`;
+}
+async function buyPack(i) {
+  const j = await api("exchange", {pack:i});
+  if (j.link) tg.openInvoice(j.link, st => { if (st === "paid") setTimeout(async () => { await api("state"); toast(t("exDone")); draw(); }, 1500); });
+}
+async function claim(){const j=await api("daily");if(!j.err)toast("+"+S.next+" cr");draw()}
+async function spin(){
+  const e=$("#wres");let i=0;const iv=setInterval(()=>e.textContent="🎡 "+[10,20,30,40,50][i++%5]+"%",90);
+  const j=await api("wheel");setTimeout(()=>{clearInterval(iv);draw()},1100);
+}
+async function applyRef(){const j=await api("ref",{code:$("#rc").value});if(!j.err)toast("✅");draw()}
+
+function games() {
+  const g = [["box","🎁"],["dice","🎲"],["scratch","🎟"]];
+  app.innerHTML = backTo("rew", t("rew")) + `<p class="mut" style="margin-bottom:10px">${t("bal")}: ${S.credits} cr</p><p id="gres" style="font-size:22px;font-weight:800;min-height:34px;margin-bottom:8px"></p>` +
+  g.map(([k, e]) => `<button class="big" ${S.plays[k] >= 3 ? "disabled style='opacity:.5'" : ""} onclick="play('${k}')"><b>${e} ${t(k)}</b><span>${3 - S.plays[k]} ${t("left")}</span></button>`).join("");
+}
+async function play(k) {
+  const j = await api("play", {game:k}); if (j.err) return draw();
+  const r = (j.roll ? "🎲 " + j.roll + " → " : "") + `${t("won")} +${j.won} cr`; draw(); $("#gres").textContent = r;
+}
+
+async function openRev() { const j = await api("reviews"); R = {reviews: j.reviews || [], avg: j.avg}; go("rev"); }
+function rev() {
+  app.innerHTML = back() + `<h2 style="margin-bottom:8px">⭐ ${t("rev")}${R.avg != null ? ` · ${R.avg}/10` : ""}</h2>` +
+  (S.bought ? `<div class="box"><p class="mut">${t("rating")}</p><input id="rt" type="number" min="0" max="10" step="0.1" inputmode="decimal" value="${S.mine?.rating ?? ""}">
+    <p class="mut" style="margin-top:8px">${t("text")}</p><textarea id="rx" rows="2" maxlength="300">${S.mine?.text ?? ""}</textarea>
+    <button class="btn" style="margin-top:10px" onclick="sendRev()">${t("send")}</button></div>` : `<p class="note">${t("revLock")}</p>`) +
+  (R.reviews.length ? R.reviews.map(r => `<div class="rev"><b>${r.rating.toFixed(1)}</b> · ${esc(r.name)}<br>${esc(r.text || "")}</div>`).join("") : `<p class="mut">${t("none")}</p>`);
+}
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
+async function sendRev() { const j = await api("review", {rating:$("#rt").value, text:$("#rx").value}); if (!j.err) { toast(t("saved")); openRev(); } }
+
+for (const l of ["en", "ru"]) $("#" + l).onclick = () => { L = l; localStorage.setItem("l", l); draw(); };
+(async () => {
+  await api("state"); const j = await api("reviews"); R = {reviews: j.reviews || [], avg: j.avg}; draw();
+})();
+</script>
+</body>
+</html>
