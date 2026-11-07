@@ -58,14 +58,6 @@ input:focus,textarea:focus{border-color:var(--acc);box-shadow:0 0 0 3px var(--gl
 @keyframes shine{to{background-position:300% 0}}
 @keyframes glow{50%{box-shadow:0 0 26px var(--glow)}}
 @keyframes pulse{0%{box-shadow:0 0 0 0 #22d3ee88}70%,100%{box-shadow:0 0 0 12px #22d3ee00}}
-.game{position:fixed;inset:0;z-index:6;background:var(--bg);padding:calc(14px + env(safe-area-inset-top)) 14px calc(14px + env(safe-area-inset-bottom));overflow:auto;animation:fade .25s both}
-.gh{display:flex;justify-content:space-between;align-items:center;font-size:18px;margin-bottom:8px}
-.tgt{position:absolute;width:56px;height:56px;border-radius:50%;border:0;background:radial-gradient(circle at 35% 30%,#fff,var(--acc) 40%,var(--acc2));box-shadow:0 0 18px var(--glow);animation:pop .15s both}
-.mg{display:grid;grid-template-columns:repeat(4,1fr);gap:8px}
-.mc{aspect-ratio:1;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--tx);font-size:28px;transition:transform .15s,background .25s}
-.mc.up{background:#0e4a63}.mc.ok{background:#0d4a3a;border-color:var(--ok)}
-.sp{aspect-ratio:1;border:0;border-radius:18px;opacity:.35;transition:opacity .1s,transform .1s}.sp.lit{opacity:1;transform:scale(.96);box-shadow:0 0 28px #fff8}
-@keyframes pop{from{transform:scale(0)}}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
 </head>
@@ -83,21 +75,21 @@ const API = "https://matador-even-freeload.ngrok-free.dev/api/api";
 const tg = Telegram.WebApp; tg.ready(); tg.expand(); try { tg.setHeaderColor("#04121c"); tg.setBackgroundColor("#04121c"); } catch (e) {}
 const T = {
 en:{wm:"Watermarks",rew:"Rewards",rev:"Reviews",from:"prices starting from",back:"← Back to main menu",order:"Order",soon:"Coming soon: products will appear here.",
- fmt:"Format",pay:"Pay with",pc:"PC (mov)",mob:"Mobile (mp4)",both:"Both",stars:"Stars",cr:"Credits (cr)",note:"⏳ Order might take up to 3 days",buy:"Order now",
- off:"shop-wide discount",bal:"Balance",daily:"Daily login bonus",claim:"Claim",claimed:"Claimed. Come back tomorrow",streak:"Streak",days:"days",perks:"One-time streak perks",
+ fmt:"Format",pc:"PC (mov)",mob:"Mobile (mp4)",both:"Both",note:"⏳ Order might take up to 3 days",buy:"Order now",
+ off:"shop-wide discount",
  wheel:"Welcome wheel",wheelInfo:"One free spin: win a 10–50% discount for 3 days.",spin:"Spin",active:"Your discount",until:"until",ref:"Friend referral",code:"Your code",
  enter:"Friend's code",apply:"Apply",refInfo:"Enter a friend's code to get 10% off your next order.",refOn:"10% referral discount ready",
- cr2:"cr",revLock:"Reviews unlock after your first purchase.",rating:"Rating (0.0–10.0)",text:"Short text (optional)",send:"Send review",none:"No reviews yet",
- limit:"Daily limit reached",funds:"Not enough credits",bought:"Buy something first",used:"Already used",invalid:"Invalid input",claimed2:"Already claimed",auth:"Open this app from the bot",
- offline:"Shop not loaded. Open it from the bot (Discover my shop button), and check that the API address in index.html is correct and the bot is running.",games:"Minigames",left:"plays left today",rush:"Target Rush",match:"Memory Match",simon:"Pattern Memory",rushInfo:"Tap the targets for 15 seconds. 4 cr per hit, up to 100.",matchInfo:"Find all 8 pairs. Fewer moves, more credits (up to 100).",simonInfo:"Repeat the growing pattern. 10 cr per round, up to 100.",moves:"Moves",watch:"Watch…",yourturn:"Your turn",round:"Round",forfeit:"Closing the game early still counts as a play.",score:"Score",name:"Name for your watermark",namePh:"e.g. Velocity",nameReq:"Please enter a name",done:"Paid! You'll get a message from the bot.",ex:"Stars ⇄ Credits",exInfo:"Exchange Stars for credits. Bigger packs include bonus credits.",bonus:"bonus",exch:"Exchange",exDone:"Credits added",saved:"Review saved",copy:"Copied",disc:"discount",avg:"average"},
+ revLock:"Reviews unlock after your first purchase.",rating:"Rating (0.0–10.0)",text:"Short text (optional)",send:"Send review",none:"No reviews yet",
+ bought:"Buy something first",used:"Already used",invalid:"Invalid input",auth:"Open this app from the bot",
+ offline:"Shop not loaded. Open it from the bot (Discover my shop button), and check that the API address in index.html is correct and the bot is running.",name:"Name for your watermark",namePh:"e.g. Velocity",nameReq:"Please enter a name",done:"Paid! You'll get a message from the bot.",saved:"Review saved",copy:"Copied",disc:"discount",avg:"average"},
 ru:{wm:"Водяные знаки",rew:"Награды",rev:"Отзывы",from:"цены от",back:"← В главное меню",order:"Заказать",soon:"Скоро: здесь появятся товары.",
- fmt:"Формат",pay:"Оплата",pc:"ПК (mov)",mob:"Мобильный (mp4)",both:"Оба",stars:"Звёзды",cr:"Кредиты (cr)",note:"⏳ Заказ может занять до 3 дней",buy:"Заказать",
- off:"скидка на весь магазин",bal:"Баланс",daily:"Ежедневный бонус",claim:"Забрать",claimed:"Получено. Приходите завтра",streak:"Серия",days:"дн.",perks:"Разовые бонусы за серию",
+ fmt:"Формат",pc:"ПК (mov)",mob:"Мобильный (mp4)",both:"Оба",note:"⏳ Заказ может занять до 3 дней",buy:"Заказать",
+ off:"скидка на весь магазин",
  wheel:"Колесо приветствия",wheelInfo:"Один бесплатный спин: скидка 10–50% на 3 дня.",spin:"Крутить",active:"Ваша скидка",until:"до",ref:"Реферальный код",code:"Ваш код",
  enter:"Код друга",apply:"Применить",refInfo:"Введите код друга и получите 10% скидку на следующий заказ.",refOn:"Скидка 10% по коду готова",
- cr2:"cr",revLock:"Отзывы доступны после первой покупки.",rating:"Оценка (0.0–10.0)",text:"Короткий текст (необязательно)",send:"Отправить отзыв",none:"Отзывов пока нет",
- limit:"Дневной лимит исчерпан",funds:"Недостаточно кредитов",bought:"Сначала сделайте покупку",used:"Уже использовано",invalid:"Неверный ввод",claimed2:"Уже получено",auth:"Откройте приложение из бота",
- offline:"Магазин не загрузился. Откройте его из бота (кнопка магазина), проверьте адрес API в index.html и что бот запущен.",games:"Мини-игры",left:"попыток сегодня",rush:"Меткость",match:"Найди пару",simon:"Запомни узор",rushInfo:"Нажимайте на цели 15 секунд. 4 cr за попадание, до 100.",matchInfo:"Найдите все 8 пар. Чем меньше ходов, тем больше кредитов (до 100).",simonInfo:"Повторяйте растущий узор. 10 cr за раунд, до 100.",moves:"Ходы",watch:"Смотрите…",yourturn:"Ваш ход",round:"Раунд",forfeit:"Если закрыть игру раньше, попытка всё равно засчитывается.",score:"Счёт",name:"Имя для вашего водяного знака",namePh:"например, Velocity",nameReq:"Введите имя",done:"Оплачено! Бот пришлёт сообщение.",ex:"Звёзды ⇄ Кредиты",exInfo:"Обменяйте звёзды на кредиты. В больших пакетах есть бонусные кредиты.",bonus:"бонус",exch:"Обменять",exDone:"Кредиты зачислены",saved:"Отзыв сохранён",copy:"Скопировано",disc:"скидка",avg:"средняя"}};
+ revLock:"Отзывы доступны после первой покупки.",rating:"Оценка (0.0–10.0)",text:"Короткий текст (необязательно)",send:"Отправить отзыв",none:"Отзывов пока нет",
+ bought:"Сначала сделайте покупку",used:"Уже использовано",invalid:"Неверный ввод",auth:"Откройте приложение из бота",
+ offline:"Магазин не загрузился. Откройте его из бота (кнопка магазина), проверьте адрес API в index.html и что бот запущен.",name:"Имя для вашего водяного знака",namePh:"например, Velocity",nameReq:"Введите имя",done:"Оплачено! Бот пришлёт сообщение.",saved:"Отзыв сохранён",copy:"Скопировано",disc:"скидка",avg:"средняя"}};
 let L = localStorage.getItem("l") || (tg.initDataUnsafe?.user?.language_code === "ru" ? "ru" : "en");
 const t = k => T[L][k] || k;
 let lastErr = "", S = null, P = [], view = "home", R = {reviews: [], avg: null};
@@ -111,7 +103,7 @@ async function api(a, d = {}) {
   } catch (e) { lastErr = "Network error (" + API + "): " + e.message; toast("Network error"); return {}; }
 }
 const disc = () => Math.min(90, S.shop + S.pers);
-const price = (p, cur) => Math.max(1, Math.ceil(p.stars * (cur === "cr" ? S.rate : 1) * (100 - disc()) / 100));
+const price = p => Math.max(1, Math.ceil(p.stars * (100 - disc()) / 100));
 const BASE = API.replace(/\/api$/, ""), vid = p => BASE + p.video;
 const title = p => p.title[L] || p.title.en;
 const fmtDate = ms => new Date(ms * 1000).toLocaleString(L === "ru" ? "ru" : "en", {day:"numeric", month:"short", hour:"2-digit", minute:"2-digit"});
@@ -124,23 +116,22 @@ function draw() {
   $("#en").classList.toggle("on", L === "en"); $("#ru").classList.toggle("on", L === "ru");
   document.documentElement.lang = L;
   if (!S) { app.innerHTML = `<p class="note">${t("offline")}<br><br><small>${esc(lastErr)}</small></p>`; return; }
-  ({home, wm, rew, games, rev, ex})[view]();
+  ({home, wm, rew, rev})[view]();
 }
 
 function home() {
-  const min = P.length ? Math.min(...P.map(p => price(p, "stars"))) : 0, minCr = P.length ? Math.min(...P.map(p => price(p, "cr"))) : 0;
+  const min = P.length ? Math.min(...P.map(price)) : 0;
   app.innerHTML = `
-  <button class="big first" onclick="go('wm')"><b>🎬 ${t("wm")}</b><span>${P.length ? `${t("from")} ${min} ⭐ / ${minCr} cr` : t("soon")}</span></button>
-  <button class="big" onclick="go('rew')"><b>🎁 ${t("rew")}</b><span>${t("bal")}: ${S.credits} cr · ${t("streak")}: ${S.streak}</span></button>
-  <button class="big" onclick="go('ex')"><b>💱 ${t("ex")}</b><span>25 ⭐ → 1250 cr · 250 ⭐ → 13000 cr</span></button>
+  <button class="big first" onclick="go('wm')"><b>🎬 ${t("wm")}</b><span>${P.length ? `${t("from")} ${min} ⭐` : t("soon")}</span></button>
+  <button class="big" onclick="go('rew')"><b>🎁 ${t("rew")}</b><span>${t("wheel")} · ${t("ref")}</span></button>
   <button class="big" onclick="openRev()"><b>⭐ ${t("rev")}</b><span>${R.avg != null ? `${R.avg} / 10 ${t("avg")}` : t("none")}</span></button>`;
 }
 
 function wm() {
   app.innerHTML = back() + (disc() ? `<p style="margin-bottom:10px"><span class="tag">−${disc()}%</span> <span class="mut">${t("off")}</span></p>` : "") +
-  (P.length ? `<div class="grid">${P.map(p => { const s = price(p, "stars"), c = price(p, "cr"), o = p.stars;
+  (P.length ? `<div class="grid">${P.map(p => { const s = price(p), o = p.stars;
     return `<div class="item"><video src="${vid(p)}" autoplay muted loop playsinline></video><div><h3>${title(p)}</h3>
-    <span>${disc() ? `<span class="old">${o} ⭐</span> ` : ""}<b>${s} ⭐</b> <span class="mut">/ ${c} cr</span></span>
+    <span>${disc() ? `<span class="old">${o} ⭐</span> ` : ""}<b>${s} ⭐</b></span>
     <button class="btn" onclick="openOrder('${p.id}')">${t("order")}</button></div></div>`; }).join("")}</div>` : `<p class="mut">${t("soon")}</p>`);
 }
 
@@ -149,17 +140,16 @@ function openOrder(id) {
   el.innerHTML = `<div><h2 style="margin-bottom:8px">${title(p)}</h2>
   <p class="mut">${t("name")}</p><input id="nm" maxlength="40" placeholder="${t("namePh")}" autocomplete="off" style="margin:6px 0 10px">
   <p class="mut">${t("fmt")}</p><div class="opt">${[["pc","pc"],["mobile","mob"],["both","both"]].map(([v,k],i)=>`<label><input type="radio" name="f" value="${v}" ${i?"":"checked"}><span>${t(k)}</span></label>`).join("")}</div>
-  <p class="mut">${t("pay")}</p><div class="opt">${[["stars","stars"],["cr","cr"]].map(([v,k],i)=>`<label><input type="radio" name="c" value="${v}" ${i?"":"checked"}><span>${t(k)}</span></label>`).join("")}</div>
   <p id="tot" style="font-size:20px;font-weight:800"></p><div class="note">${t("note")}</div>
   <button class="btn" id="go">${t("buy")}</button><button class="btn alt" style="margin-top:8px" id="x">✕</button></div>`;
   document.body.append(el);
   const val = n => el.querySelector(`input[name=${n}]:checked`).value;
-  const upd = () => { const c = val("c"); $("#tot").textContent = price(p, c) + (c === "cr" ? " cr" : " ⭐"); };
+  const upd = () => { $("#tot").textContent = price(p) + " ⭐"; };
   el.addEventListener("change", upd); upd();
   $("#x").onclick = () => el.remove();
   $("#go").onclick = async () => {
     const nm = $("#nm").value.trim(); if (!nm) return toast(t("nameReq"));
-    $("#go").disabled = true; const j = await api("order", {pid:id, fmt:val("f"), pay:val("c"), name:nm});
+    $("#go").disabled = true; const j = await api("order", {pid:id, fmt:val("f"), name:nm});
     if (j.link) tg.openInvoice(j.link, st => { if (st === "paid") { toast(t("done")); el.remove(); } else $("#go").disabled = false; });
     else if (j.done) { toast(t("done")); el.remove(); draw(); } else $("#go").disabled = false;
   };
@@ -167,105 +157,18 @@ function openOrder(id) {
 
 function rew() {
   const wLeft = S.wexp > Date.now() / 1000;
-  app.innerHTML = back() + `<p class="mut" style="margin-bottom:10px">${t("bal")}: <b style="color:var(--tx)">${S.credits} cr</b></p>
-  <div class="box"><h2>📅 ${t("daily")}</h2><p class="mut">${t("streak")}: ${S.streak} ${t("days")} · +${S.next} cr</p>
-   <p class="mut" style="margin-top:8px">${t("perks")}</p>${Object.entries(S.perk_table).map(([d, c]) => `<span class="perk ${S.perks.includes(+d) ? "done" : ""}">${d} ${t("days")}: +${c} cr</span>`).join("")}
-   <button class="btn ${S.claimed ? "" : "pulse"}" style="margin-top:10px" ${S.claimed ? "disabled" : ""} onclick="claim()">${S.claimed ? t("claimed") : t("claim") + " +" + S.next + " cr"}</button></div>
-  <div class="box"><h2>🎡 ${t("wheel")}</h2><p class="mut">${t("wheelInfo")}</p><p id="wres" style="font-size:22px;font-weight:800;margin-top:6px">${S.wheel_used ? (wLeft ? `${t("active")}: −${S.wp}% ${t("until")} ${fmtDate(S.wexp)}` : "") : ""}</p>
+  app.innerHTML = back() + `  <div class="box"><h2>🎡 ${t("wheel")}</h2><p class="mut">${t("wheelInfo")}</p><p id="wres" style="font-size:22px;font-weight:800;margin-top:6px">${S.wheel_used ? (wLeft ? `${t("active")}: −${S.wp}% ${t("until")} ${fmtDate(S.wexp)}` : "") : ""}</p>
    <button class="btn ${S.wheel_used ? "" : "pulse"}" style="margin-top:8px" ${S.wheel_used ? "disabled" : ""} onclick="spin()">${t("spin")}</button></div>
   <div class="box"><h2>🤝 ${t("ref")}</h2><p class="mut">${t("refInfo")}</p>
    <div class="row"><input readonly value="${S.code}"><button class="btn alt" style="width:auto;margin:0" onclick="navigator.clipboard?.writeText('${S.code}');toast(t('copy'))">⧉</button></div>
-   ${S.ref_by ? `<p class="mut" style="margin-top:8px">${S.ref ? "✅ " + t("refOn") : ""}</p>` : `<div class="row"><input id="rc" placeholder="${t("enter")}"><button class="btn" style="width:auto;margin:0" onclick="applyRef()">${t("apply")}</button></div>`}</div>
-  <button class="big" onclick="go('games')"><b>🕹 ${t("games")}</b><span>${t("bal")}: ${S.credits} cr</span></button>`;
+   ${S.ref_by ? `<p class="mut" style="margin-top:8px">${S.ref ? "✅ " + t("refOn") : ""}</p>` : `<div class="row"><input id="rc" placeholder="${t("enter")}"><button class="btn" style="width:auto;margin:0" onclick="applyRef()">${t("apply")}</button></div>`}</div>`;
 }
-function ex() {
-  app.innerHTML = back() + `<p class="mut" style="margin-bottom:6px">${t("bal")}: <b style="color:var(--tx)">${S.credits} cr</b></p><p class="mut" style="margin-bottom:12px">${t("exInfo")}</p>
-  <div class="grid">${S.packs.map((p, i) => { const b = p.cr - p.stars * S.rate;
-    return `<div class="item"><div><h3>${p.stars} ⭐</h3><b style="font-size:18px">${p.cr} cr</b>${b > 0 ? `<span class="tag" style="width:max-content">+${b} ${t("bonus")}</span>` : ""}<button class="btn" onclick="buyPack(${i})">${t("exch")}</button></div></div>`; }).join("")}</div>`;
-}
-async function buyPack(i) {
-  const j = await api("exchange", {pack:i});
-  if (j.link) tg.openInvoice(j.link, st => { if (st === "paid") setTimeout(async () => { await api("state"); toast(t("exDone")); draw(); }, 1500); });
-}
-async function claim(){const j=await api("daily");if(!j.err)toast("+"+S.next+" cr");draw()}
 async function spin(){
   const e=$("#wres");let i=0;const iv=setInterval(()=>e.textContent="🎡 "+[10,20,30,40,50][i++%5]+"%",90);
   const j=await api("wheel");setTimeout(()=>{clearInterval(iv);draw()},1100);
 }
 async function applyRef(){const j=await api("ref",{code:$("#rc").value});if(!j.err)toast("✅");draw()}
 
-function games() {
-  const g = [["rush", "🎯"], ["match", "🃏"], ["simon", "🧠"]];
-  app.innerHTML = backTo("rew", t("rew")) + `<p class="mut" style="margin-bottom:10px">${t("bal")}: ${S.credits} cr</p>` +
-  g.map(([k, e]) => `<button class="big" ${S.plays[k] >= 3 ? 'disabled style="opacity:.5"' : ""} onclick="startGame('${k}')"><b>${e} ${t(k)}</b><span>${t(k + "Info")}</span><span style="display:block;margin-top:4px">${3 - S.plays[k]} ${t("left")}</span></button>`).join("");
-}
-async function startGame(k) {
-  const j = await api("gstart", {game: k}); if (j.err) return draw();
-  const el = document.createElement("div"); el.className = "game";
-  el.innerHTML = `<div class="gh"><b>${t(k)}</b><button class="back" id="gx" style="padding:0">✕</button></div><p class="mut" id="gi" style="min-height:20px;margin-bottom:8px"></p><div id="gb"></div><p class="mut" style="margin-top:12px">${t("forfeit")}</p>`;
-  document.body.append(el);
-  const close = () => { el.remove(); draw(); };
-  $("#gx").onclick = close;
-  const end = async score => {
-    if (!el.isConnected) return;
-    const r = await api("gend", {game: k, score}); if (!el.isConnected) return;
-    $("#gi").textContent = "";
-    $("#gb").innerHTML = `<div class="box" style="text-align:center;margin-top:20px"><p class="mut">${t("score")}: ${score}</p><p style="font-size:30px;font-weight:800;margin:8px 0">+${r.won || 0} cr</p><button class="btn" id="gok">OK</button></div>`;
-    $("#gok").onclick = close;
-  };
-  ({rush, match, simon})[k]($("#gb"), end);
-}
-function rush(body, end) {
-  let hits = 0, over = false, n = 0; const t0 = Date.now(), info = $("#gi");
-  body.innerHTML = '<div id="ra" style="position:relative;height:62vh;border:1px solid var(--line);border-radius:14px;overflow:hidden;touch-action:manipulation"></div>';
-  const ra = $("#ra");
-  const tick = setInterval(() => {
-    const left = Math.max(0, 15 - (Date.now() - t0) / 1000); info.textContent = `⏱ ${left.toFixed(1)}s · 🎯 ${hits}`;
-    if (left <= 0) { over = true; clearInterval(tick); ra.innerHTML = ""; end(hits); }
-  }, 100);
-  (function spawn() {
-    if (over) return;
-    const b = document.createElement("button"); b.className = "tgt"; let gone = false;
-    b.style.left = Math.random() * (ra.clientWidth - 60) + "px"; b.style.top = Math.random() * (ra.clientHeight - 60) + "px";
-    const next = () => { if (gone) return; gone = true; b.remove(); setTimeout(spawn, 120 + Math.random() * 220); };
-    b.onpointerdown = () => { if (gone || over) return; hits++; next(); };
-    ra.append(b); n++; setTimeout(next, Math.max(650, 1100 - n * 20));
-  })();
-}
-function match(body, end) {
-  const em = ["🚀", "⚡", "🎬", "💎", "🔥", "🌊", "⭐", "🎵"], cards = [...em, ...em].sort(() => Math.random() - .5), info = $("#gi");
-  let open = [], moves = 0, done = 0, lock = false; info.textContent = t("moves") + ": 0";
-  body.innerHTML = '<div class="mg">' + cards.map((c, i) => `<button class="mc" data-i="${i}">?</button>`).join("") + "</div>";
-  body.querySelectorAll(".mc").forEach(b => b.onclick = () => {
-    if (lock || b.classList.contains("up")) return;
-    b.classList.add("up"); b.textContent = cards[b.dataset.i]; open.push(b);
-    if (open.length < 2) return;
-    moves++; info.textContent = t("moves") + ": " + moves; lock = true; const [x, y] = open;
-    setTimeout(() => {
-      if (cards[x.dataset.i] === cards[y.dataset.i]) { done++; x.classList.add("ok"); y.classList.add("ok"); }
-      else [x, y].forEach(z => { z.classList.remove("up"); z.textContent = "?"; });
-      open = []; lock = false; if (done === 8) end(moves);
-    }, 650);
-  });
-}
-function simon(body, end) {
-  const col = ["#22d3ee", "#3b82f6", "#2ee6a6", "#a78bfa"], seq = [], info = $("#gi"), wait = ms => new Promise(res => setTimeout(res, ms));
-  let pos = 0, r = 0, accept = false;
-  body.innerHTML = '<div class="mg" style="grid-template-columns:1fr 1fr;gap:12px">' + col.map(c => `<button class="sp" style="background:${c}"></button>`).join("") + "</div>";
-  const pads = [...body.querySelectorAll(".sp")];
-  const flash = async i => { pads[i].classList.add("lit"); await wait(380); pads[i].classList.remove("lit"); await wait(180); };
-  async function round() {
-    accept = false; info.textContent = t("watch"); await wait(700); seq.push(Math.floor(Math.random() * 4));
-    for (const i of seq) { if (!body.isConnected) return; await flash(i); }
-    pos = 0; accept = true; info.textContent = `${t("yourturn")} · ${t("round")} ${r + 1}`;
-  }
-  pads.forEach((p, i) => p.onclick = () => {
-    if (!accept) return; p.classList.add("lit"); setTimeout(() => p.classList.remove("lit"), 150);
-    if (i !== seq[pos]) { accept = false; return end(r); }
-    if (++pos === seq.length) { r++; if (r >= 10) { accept = false; return end(r); } round(); }
-  });
-  round();
-}
 async function openRev() { const j = await api("reviews"); R = {reviews: j.reviews || [], avg: j.avg}; go("rev"); }
 function rev() {
   app.innerHTML = back() + `<h2 style="margin-bottom:8px">⭐ ${t("rev")}${R.avg != null ? ` · ${R.avg}/10` : ""}</h2>` +
