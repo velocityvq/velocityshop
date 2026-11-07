@@ -156,9 +156,20 @@ const openLink = u => u.includes("t.me/") ? tg.openTelegramLink(u) : tg.openLink
 function wm() {
   app.innerHTML = back() + (disc() ? `<p style="margin-bottom:10px"><span class="tag">−${disc()}%</span> <span class="mut">${t("off")}</span></p>` : "") +
   (P.length ? `<div class="grid">${P.map(p => { const s = price(p), o = p.stars;
-    return `<div class="item"><div class="vw" style="padding:0;display:block;flex:none"><video src="${vid(p)}" autoplay muted loop playsinline></video>${disc() ? `<span class="tag corner">−${disc()}%</span>` : ""}</div><div><h3>${title(p)}</h3>
+    return `<div class="item"><div class="vw" style="padding:0;display:block;flex:none"><video data-src="${vid(p)}" autoplay muted loop playsinline></video>${disc() ? `<span class="tag corner">−${disc()}%</span>` : ""}</div><div><h3>${title(p)}</h3>
     <span>${disc() ? `<span class="old">${o} ⭐</span> ` : ""}<b>${s} ⭐</b></span>
     <button class="btn" onclick="openOrder('${p.id}')">${t("order")}</button></div></div>`; }).join("")}</div>` : `<div class="empty"><i class="ic">🎞</i><p class="mut">${t("emptyT")}</p></div>`);
+  loadVideos();
+}
+const blobs = {};
+async function loadVideos() {
+  for (const v of document.querySelectorAll("video[data-src]")) {
+    const u = v.dataset.src;
+    try {
+      if (!blobs[u]) { const r = await fetch(u, {headers: {"ngrok-skip-browser-warning": "1"}}); if (!r.ok) throw 0; blobs[u] = URL.createObjectURL(await r.blob()); }
+      v.src = blobs[u]; v.play().catch(() => {});
+    } catch (e) {}
+  }
 }
 
 function openOrder(id) {
