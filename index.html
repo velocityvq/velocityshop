@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" data-theme="ocean">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
@@ -7,84 +7,117 @@
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
 <link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;800&display=swap" rel="stylesheet">
 <style>
-:root{--bg:#04121c;--card:#0b2230;--line:#14465c;--tx:#e6fbff;--mut:#7eaabb;--acc:#22d3ee;--acc2:#3b82f6;--ok:#2ee6a6;--glow:#22d3ee55;--ink:#03202b}
+:root{--bg:#04121c;--card:#0b2230;--line:#14465c;--tx:#e6fbff;--mut:#7eaabb;--acc:#22d3ee;--acc2:#3b82f6;--ok:#2ee6a6;--ink:#03202b;--rgb:34 211 238;--rgb2:59 130 246;--hero1:#0e4a63;--hero2:#0b2a55}
+[data-theme=neon]{--bg:#0e0620;--card:#1a0f36;--line:#3b2478;--tx:#f5eeff;--mut:#a595d6;--acc:#c77dff;--acc2:#ff4fd8;--ok:#5ef2b0;--ink:#1a0636;--rgb:199 125 255;--rgb2:255 79 216;--hero1:#4a1a7a;--hero2:#7a1a62}
+[data-theme=sunset]{--bg:#1a0a08;--card:#2a1411;--line:#6b2f1f;--tx:#fff1e8;--mut:#d1a08a;--acc:#ff9f43;--acc2:#ff4d4d;--ok:#ffd166;--ink:#2a0d05;--rgb:255 159 67;--rgb2:255 77 77;--hero1:#7a3412;--hero2:#7a1f2a}
+[data-theme=forest]{--bg:#06150f;--card:#0c2419;--line:#1c5a3c;--tx:#e9fff3;--mut:#86b9a0;--acc:#34e08a;--acc2:#12b5a6;--ok:#b9f27c;--ink:#032014;--rgb:52 224 138;--rgb2:18 181 166;--hero1:#0f5a3a;--hero2:#0b4a4a}
+[data-theme=light]{--bg:#eef6ff;--card:#fff;--line:#c9dcf0;--tx:#0b2540;--mut:#5d7a96;--acc:#0891b2;--acc2:#2563eb;--ok:#0f9d63;--ink:#fff;--rgb:8 145 178;--rgb2:37 99 235;--hero1:#bfe6ff;--hero2:#d5e0ff}
 *{box-sizing:border-box;margin:0}
 html{background:var(--bg)}
-body{color:var(--tx);font:15px/1.4 Sora,system-ui,sans-serif;padding:env(safe-area-inset-top) 14px calc(24px + env(safe-area-inset-bottom));min-height:100vh}
-body::before{content:"";position:fixed;inset:-25%;z-index:-1;pointer-events:none;background:radial-gradient(40% 35% at 20% 15%,#22d3ee26,transparent 70%),radial-gradient(45% 40% at 85% 80%,#3b82f633,transparent 70%);animation:drift 16s ease-in-out infinite alternate}
+body{color:var(--tx);font:15px/1.4 Sora,system-ui,sans-serif;padding:env(safe-area-inset-top) 14px calc(28px + env(safe-area-inset-bottom));min-height:100vh;overflow-x:hidden}
+body::before{content:"";position:fixed;inset:-25%;z-index:-2;pointer-events:none;background:radial-gradient(40% 35% at 20% 15%,rgb(var(--rgb)/.2),transparent 70%),radial-gradient(45% 40% at 85% 80%,rgb(var(--rgb2)/.24),transparent 70%);animation:drift 16s ease-in-out infinite alternate}
+body::after{content:"";position:fixed;inset:0;z-index:-1;pointer-events:none;background-image:radial-gradient(rgb(var(--rgb)/.28) 1px,transparent 1.5px);background-size:26px 26px;-webkit-mask-image:linear-gradient(#000,transparent 70%);mask-image:linear-gradient(#000,transparent 70%);animation:grid 30s linear infinite}
 header{display:grid;grid-template-columns:96px 1fr 96px;align-items:center;padding:14px 0}
-h1{font-size:20px;font-weight:800;text-align:center;letter-spacing:-.02em;background:linear-gradient(90deg,#e6fbff,#22d3ee,#3b82f6,#e6fbff);background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 7s linear infinite}
-.lang{display:flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;width:max-content}
+h1{font-size:20px;font-weight:800;text-align:center;letter-spacing:-.02em;background:linear-gradient(90deg,var(--tx),var(--acc),var(--acc2),var(--tx));background-size:300% 100%;-webkit-background-clip:text;background-clip:text;color:transparent;animation:shine 7s linear infinite}
+.lang{display:flex;border:1px solid var(--line);border-radius:10px;overflow:hidden;width:max-content;background:var(--card)}
 .lang button{border:0;background:none;color:var(--mut);padding:6px 10px;font:600 12px Sora,sans-serif;transition:background .25s,color .25s}
 .lang button.on{background:linear-gradient(135deg,var(--acc),var(--acc2));color:var(--ink)}
+#cog{justify-self:end;width:38px;height:38px;border-radius:12px;border:1px solid var(--line);background:var(--card);color:var(--tx);font-size:18px;transition:transform .6s cubic-bezier(.2,.8,.2,1)}
+#cog:active{transform:rotate(120deg) scale(.92)}
 button{font-family:inherit;cursor:pointer;-webkit-tap-highlight-color:transparent}
 button:focus-visible,input:focus-visible,textarea:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
-.big{display:flex;align-items:center;gap:14px;width:100%;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:12px;color:var(--tx);transition:transform .2s,box-shadow .2s,border-color .2s}
+.big{display:flex;align-items:center;gap:14px;width:100%;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px;margin-bottom:12px;color:var(--tx);transition:transform .2s,box-shadow .2s,border-color .2s}
 .big b{display:block;font-size:17px}.big span{color:var(--mut);font-size:13px}.big div{min-width:0}
-.big.first{border-color:var(--acc);background:linear-gradient(135deg,#0e4a63,var(--card));animation:glow 3s ease-in-out infinite}
+.big.first{border-color:var(--acc);background:linear-gradient(135deg,rgb(var(--rgb)/.26),var(--card));animation:glow 3s ease-in-out infinite}
 .big:active,.item:active{transform:scale(.98)}
-@media(hover:hover){.big:hover,.item:hover{transform:translateY(-2px);box-shadow:0 8px 24px var(--glow);border-color:var(--acc)}}
+@media(hover:hover){.big:hover,.item:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgb(var(--rgb)/.3);border-color:var(--acc)}}
+.ic{flex:none;width:50px;height:50px;border-radius:15px;display:grid;place-items:center;font-size:25px;font-style:normal;background:linear-gradient(135deg,rgb(var(--rgb)/.22),rgb(var(--rgb2)/.22));border:1px solid var(--line);animation:bob 3.6s ease-in-out infinite alternate;animation-delay:var(--d,0s)}
+.big em{margin-left:auto;font-style:normal;color:var(--acc);font-size:24px;transition:transform .2s}.big:active em{transform:translateX(4px)}
 .back{background:none;border:0;color:var(--acc);font:600 14px Sora,sans-serif;padding:6px 0 14px;transition:transform .2s}.back:active{transform:translateX(-4px)}
+.hero{position:relative;overflow:hidden;border-radius:20px;padding:20px 18px;margin-bottom:14px;background:linear-gradient(135deg,var(--hero1),var(--hero2) 60%,var(--card));border:1px solid var(--line)}
+.hero::before,.hero::after{content:"";position:absolute;border-radius:50%;pointer-events:none}
+.hero::before{right:-40px;top:-40px;width:170px;height:170px;background:radial-gradient(circle,rgb(var(--rgb)/.5),transparent 70%);animation:float 7s ease-in-out infinite alternate}
+.hero::after{left:-30px;bottom:-60px;width:150px;height:150px;background:radial-gradient(circle,rgb(var(--rgb2)/.5),transparent 70%);animation:float 9s ease-in-out infinite alternate-reverse}
+.hero>*{position:relative}.hero h2{font-size:22px;line-height:1.2;margin:6px 0 4px}.hero p{opacity:.8;font-size:13px}
+.badge{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--acc)}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}.chips span{font-size:12px;border:1px solid rgb(var(--rgb)/.4);background:rgb(var(--rgb)/.12);border-radius:999px;padding:4px 10px}
+.sec{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--mut);margin:18px 0 8px}
+.links{display:flex;flex-wrap:wrap;gap:8px}.links button{background:var(--card);border:1px solid var(--line);color:var(--tx);border-radius:999px;padding:8px 13px;font-size:13px;transition:transform .15s,border-color .2s}.links button:active{transform:scale(.95)}
+.ptitle{font-size:20px;margin:0 0 4px}.hint{color:var(--mut);font-size:12px;margin-bottom:12px}
 .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
 .item{background:var(--card);border:1px solid var(--line);border-radius:14px;overflow:hidden;display:flex;flex-direction:column;transition:transform .2s,box-shadow .2s,border-color .2s}
-.item video{width:100%;aspect-ratio:1;object-fit:cover;background:#000}
-.item div{padding:10px;display:flex;flex-direction:column;gap:6px;flex:1}
-.item h3{font-size:14px;font-weight:600}.old{color:var(--mut);text-decoration:line-through;font-size:12px}
+.vw{position:relative;aspect-ratio:1;background:linear-gradient(100deg,var(--card) 30%,rgb(var(--rgb)/.16) 50%,var(--card) 70%);background-size:300% 100%;animation:sk 1.4s linear infinite;cursor:zoom-in}
+.vw.ready{animation:none;background:#000}
+.vw video{width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .6s}.vw.ready video{opacity:1}
+.vw::after{content:"";position:absolute;inset:auto 0 0 0;height:35%;background:linear-gradient(transparent,var(--card));pointer-events:none}
+.corner{position:absolute;left:8px;top:8px;z-index:1}
+.exp{position:absolute;right:8px;top:8px;z-index:1;width:28px;height:28px;display:grid;place-items:center;border-radius:9px;background:rgb(0 0 0/.45);color:#fff;font-size:14px;backdrop-filter:blur(6px);transition:transform .2s}.vw:active .exp{transform:scale(1.2)}
+.meta{padding:10px;display:flex;flex-direction:column;gap:6px;flex:1}
+.meta h3{font-size:14px;font-weight:600}.old{color:var(--mut);text-decoration:line-through;font-size:12px}
+.mini{display:inline-block;font-size:11px;border:1px solid var(--line);border-radius:999px;padding:2px 8px;color:var(--mut)}
 .btn{background:linear-gradient(135deg,var(--acc),var(--acc2));color:var(--ink);border:0;border-radius:10px;padding:10px;font-weight:700;font-size:14px;width:100%;margin-top:auto;transition:transform .15s,filter .2s,opacity .2s}
 .btn:active{transform:scale(.96)}@media(hover:hover){.btn:hover{filter:brightness(1.1)}}
-.btn.alt{background:var(--line);color:var(--tx)}.btn:disabled{opacity:.45}
+.btn.alt{background:var(--line);color:var(--tx)}.btn.alt.on{background:linear-gradient(135deg,var(--acc),var(--acc2));color:var(--ink)}.btn:disabled{opacity:.45}
 .btn.pulse{animation:pulse 2s ease-out infinite}
 .box{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;margin-bottom:12px}
 .box h2{font-size:16px;margin-bottom:6px}.mut{color:var(--mut);font-size:13px}
 .row{display:flex;gap:8px;align-items:center;margin-top:8px}
 input,textarea{width:100%;background:var(--bg);border:1px solid var(--line);color:var(--tx);border-radius:10px;padding:10px;font:inherit;transition:border-color .2s,box-shadow .2s}
-input:focus,textarea:focus{border-color:var(--acc);box-shadow:0 0 0 3px var(--glow)}
+input:focus,textarea:focus{border-color:var(--acc);box-shadow:0 0 0 3px rgb(var(--rgb)/.3)}
 .tag{display:inline-block;background:linear-gradient(135deg,var(--acc),var(--acc2));color:var(--ink);border-radius:8px;padding:2px 8px;font-size:12px;font-weight:700}
-.perk{display:inline-block;border:1px solid var(--line);border-radius:8px;padding:3px 8px;margin:4px 4px 0 0;font-size:12px}.perk.done{border-color:var(--ok);color:var(--ok)}
-.sheet{position:fixed;inset:0;background:#000a;display:flex;align-items:flex-end;z-index:5;animation:fade .25s both}
-.sheet>div{background:var(--bg);border-top:1px solid var(--acc);border-radius:20px 20px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom));width:100%;max-height:90vh;overflow:auto;animation:slide .35s cubic-bezier(.2,.8,.2,1) both}
-.opt{display:flex;gap:8px;margin:8px 0}.opt label{flex:1;text-align:center;border:1px solid var(--line);border-radius:10px;padding:10px 4px;font-size:13px;transition:border-color .2s,background .2s}
-.opt input{display:none}.opt input:checked+span{color:var(--acc);font-weight:800}.opt label:has(input:checked){border-color:var(--acc);background:#22d3ee14}
-.note{background:#2a2410;border:1px solid #6b5a1f;color:#ffd978;border-radius:10px;padding:8px 10px;font-size:13px;margin:10px 0}
+.sheet{position:fixed;inset:0;background:rgb(0 0 0/.6);display:flex;align-items:flex-end;z-index:5;animation:fade .25s both}
+.sheet>div{background:var(--bg);border-top:1px solid var(--acc);border-radius:22px 22px 0 0;padding:10px 16px calc(18px + env(safe-area-inset-bottom));width:100%;max-height:92vh;overflow:auto;animation:slide .4s cubic-bezier(.2,.8,.2,1) both}
+.sheet h2{margin-bottom:8px}.grab{width:42px;height:4px;border-radius:4px;background:var(--line);margin:0 auto 12px}
+.opt{display:flex;gap:8px;margin:8px 0}.opt label{flex:1;text-align:center;border:1px solid var(--line);border-radius:10px;padding:10px 4px;font-size:13px;transition:border-color .2s,background .2s,transform .15s}.opt label:active{transform:scale(.96)}
+.opt input{display:none}.opt input:checked+span{color:var(--acc);font-weight:800}.opt label:has(input:checked){border-color:var(--acc);background:rgb(var(--rgb)/.12)}
+.sw{display:flex;flex-wrap:wrap;gap:9px;margin:10px 0 12px}
+.dot{width:30px;height:30px;border-radius:50%;border:0;outline:2px solid var(--line);outline-offset:2px;position:relative;display:grid;place-items:center;transition:transform .2s,outline-color .2s}
+.dot.on{outline-color:var(--tx);transform:scale(1.14);animation:pop .3s}
+.dot.cust{background:conic-gradient(#f33,#fd0,#3d5,#0dd,#36f,#d3f,#f33);overflow:hidden}.dot.cust input{position:absolute;inset:0;opacity:0;width:100%;height:100%;padding:0;cursor:pointer}.dot.cust span{pointer-events:none;color:#fff;font-weight:800;text-shadow:0 1px 3px #000}
+.pr{font-size:22px;font-weight:800;margin:8px 0}
+.note{background:rgb(255 193 7/.14);border:1px solid rgb(255 193 7/.5);border-radius:10px;padding:8px 10px;font-size:13px;margin:10px 0}
+.themes{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.th{border:1px solid var(--line);background:var(--card);border-radius:14px;padding:10px;color:var(--tx);text-align:left;display:flex;gap:10px;align-items:center;font-size:13px;transition:transform .2s,border-color .2s,box-shadow .2s}.th:active{transform:scale(.96)}
+.th.on{border-color:var(--acc);box-shadow:0 0 0 2px rgb(var(--rgb)/.3)}.sq{width:28px;height:28px;border-radius:9px;flex:none}
 .rev{border-top:1px solid var(--line);padding:10px 0}.rev b{color:var(--ok)}
-#toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);background:var(--tx);color:var(--bg);padding:10px 16px;border-radius:12px;font-weight:600;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;z-index:9}
-#toast.on{opacity:1;transform:translate(-50%,0)}
-#app.enter>*:not(.grid),#app.enter .item{animation:rise .5s cubic-bezier(.2,.7,.2,1) both}
-#app.enter>:nth-child(2){animation-delay:0.07s}#app.enter .item:nth-child(2){animation-delay:0.16s}#app.enter>:nth-child(3){animation-delay:0.14s}#app.enter .item:nth-child(3){animation-delay:0.22s}#app.enter>:nth-child(4){animation-delay:0.21s}#app.enter .item:nth-child(4){animation-delay:0.28s}#app.enter>:nth-child(5){animation-delay:0.28s}#app.enter .item:nth-child(5){animation-delay:0.34s}#app.enter>:nth-child(6){animation-delay:0.35s}#app.enter .item:nth-child(6){animation-delay:0.40s}#app.enter>:nth-child(7){animation-delay:0.42s}#app.enter .item:nth-child(7){animation-delay:0.46s}#app.enter>:nth-child(8){animation-delay:0.49s}#app.enter .item:nth-child(8){animation-delay:0.52s}
-@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
-@keyframes fade{from{opacity:0}}
-@keyframes slide{from{transform:translateY(100%)}}
-@keyframes drift{to{transform:translate3d(6%,4%,0) scale(1.12)}}
-@keyframes shine{to{background-position:300% 0}}
-@keyframes glow{50%{box-shadow:0 0 26px var(--glow)}}
-@keyframes pulse{0%{box-shadow:0 0 0 0 #22d3ee88}70%,100%{box-shadow:0 0 0 12px #22d3ee00}}
-.ic{flex:none;width:50px;height:50px;border-radius:15px;display:grid;place-items:center;font-size:25px;font-style:normal;background:linear-gradient(135deg,#22d3ee33,#3b82f633);border:1px solid var(--line)}
-.big em{margin-left:auto;font-style:normal;color:var(--acc);font-size:24px;transition:transform .2s}.big:active em{transform:translateX(4px)}
-.hero{position:relative;overflow:hidden;border-radius:20px;padding:20px 18px;margin-bottom:14px;background:linear-gradient(135deg,#0e4a63,#0b2a55 60%,#0b2230);border:1px solid var(--line)}
-.hero::before,.hero::after{content:"";position:absolute;border-radius:50%;pointer-events:none}
-.hero::before{right:-40px;top:-40px;width:170px;height:170px;background:radial-gradient(circle,#22d3ee77,transparent 70%);animation:float 7s ease-in-out infinite alternate}
-.hero::after{left:-30px;bottom:-60px;width:150px;height:150px;background:radial-gradient(circle,#3b82f677,transparent 70%);animation:float 9s ease-in-out infinite alternate-reverse}
-.hero>*{position:relative}.hero h2{font-size:22px;line-height:1.2;margin:6px 0 4px}.hero p{color:#b7dbe6;font-size:13px}
-.badge{font-size:11px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--acc)}
-.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:12px}.chips span{font-size:12px;border:1px solid #22d3ee55;background:#04121c88;border-radius:999px;padding:4px 10px}
-.sec{font-size:12px;letter-spacing:.1em;text-transform:uppercase;color:var(--mut);margin:18px 0 8px}
-.links{display:flex;flex-wrap:wrap;gap:8px}.links button{background:var(--card);border:1px solid var(--line);color:var(--tx);border-radius:999px;padding:8px 13px;font-size:13px;transition:transform .15s,border-color .2s}.links button:active{transform:scale(.95)}
-.vw{position:relative}.vw::after{content:"";position:absolute;inset:auto 0 0 0;height:40%;background:linear-gradient(transparent,var(--card));pointer-events:none}
-.corner{position:absolute;left:8px;top:8px;z-index:1}
-.empty{text-align:center;padding:40px 10px}.empty .ic{margin:0 auto 12px;width:64px;height:64px;font-size:30px;animation:float 3s ease-in-out infinite alternate}
 .wheelwrap{position:relative;width:176px;margin:14px auto 6px}
-.wheel{position:relative;width:176px;height:176px;border-radius:50%;border:4px solid var(--bg);outline:2px solid var(--line);background:conic-gradient(#22d3ee 0 72deg,#3b82f6 72deg 144deg,#2ee6a6 144deg 216deg,#a78bfa 216deg 288deg,#f472b6 288deg 360deg);box-shadow:0 0 34px var(--glow);transition:transform 3.2s cubic-bezier(.12,.7,.1,1)}
-.wheel span{position:absolute;left:50%;top:50%;width:36px;margin:-9px 0 0 -18px;text-align:center;font-weight:800;font-size:13px;color:var(--ink)}
+.wheel{position:relative;width:176px;height:176px;border-radius:50%;border:4px solid var(--bg);outline:2px solid var(--line);background:conic-gradient(var(--acc) 0 72deg,var(--acc2) 72deg 144deg,var(--ok) 144deg 216deg,#a78bfa 216deg 288deg,#f472b6 288deg 360deg);box-shadow:0 0 34px rgb(var(--rgb)/.4);transition:transform 3.2s cubic-bezier(.12,.7,.1,1)}
+.wheel span{position:absolute;left:50%;top:50%;width:36px;margin:-9px 0 0 -18px;text-align:center;font-weight:800;font-size:13px;color:#06141f}
 .wheel::after{content:"";position:absolute;inset:50% auto auto 50%;width:26px;height:26px;margin:-13px 0 0 -13px;border-radius:50%;background:var(--bg);border:2px solid var(--acc)}
 .ptr{position:absolute;left:50%;top:-14px;transform:translateX(-50%);z-index:2;font-size:22px;color:var(--tx);filter:drop-shadow(0 2px 4px #0009)}
+.empty{text-align:center;padding:40px 10px}.empty .ic{margin:0 auto 12px;width:64px;height:64px;font-size:30px}
+.sk{border-radius:16px;margin-bottom:12px;background:linear-gradient(100deg,var(--card) 30%,rgb(var(--rgb)/.16) 50%,var(--card) 70%);background-size:300% 100%;animation:sk 1.4s linear infinite}
+.lb{position:fixed;inset:0;z-index:30;background:rgb(0 0 0/.93);backdrop-filter:blur(14px);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px;animation:fade .25s both}
+.lb.out{animation:fadeout .25s both}.lb video{max-width:100%;max-height:80vh;border-radius:16px;animation:zoom .4s cubic-bezier(.2,.8,.2,1) both;box-shadow:0 0 70px rgb(var(--rgb)/.4)}
+.lb p{color:#fff;font-weight:600}.lbx{position:absolute;right:14px;top:calc(14px + env(safe-area-inset-top));width:40px;height:40px;border-radius:50%;border:0;background:rgb(255 255 255/.15);color:#fff;font-size:18px}
+#toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);background:var(--tx);color:var(--bg);padding:10px 16px;border-radius:12px;font-weight:600;opacity:0;pointer-events:none;transition:opacity .25s,transform .25s;z-index:40}
+#toast.on{opacity:1;transform:translate(-50%,0)}
+.cf{position:fixed;inset:0;pointer-events:none;z-index:50;overflow:hidden}.cf i{position:absolute;width:8px;height:12px;border-radius:2px}
+#app.enter>*:not(.grid),#app.enter .item{animation:rise .5s cubic-bezier(.2,.7,.2,1) both}
+#app.enter>:nth-child(2){animation-delay:.07s}#app.enter>:nth-child(3){animation-delay:.14s}#app.enter>:nth-child(4){animation-delay:.21s}#app.enter>:nth-child(5){animation-delay:.28s}#app.enter>:nth-child(6){animation-delay:.35s}#app.enter>:nth-child(7){animation-delay:.42s}
+#app.enter .item:nth-child(2){animation-delay:.16s}#app.enter .item:nth-child(3){animation-delay:.22s}#app.enter .item:nth-child(4){animation-delay:.28s}#app.enter .item:nth-child(5){animation-delay:.34s}#app.enter .item:nth-child(6){animation-delay:.4s}
+@keyframes rise{from{opacity:0;transform:translateY(18px) scale(.98)}to{opacity:1;transform:none}}
+@keyframes fade{from{opacity:0}}@keyframes fadeout{to{opacity:0}}
+@keyframes slide{from{transform:translateY(100%)}}
+@keyframes zoom{from{opacity:0;transform:scale(.8)}}
+@keyframes pop{50%{transform:scale(1.3)}}
+@keyframes drift{to{transform:translate3d(6%,4%,0) scale(1.12)}}
+@keyframes grid{to{background-position:0 26px}}
+@keyframes shine{to{background-position:300% 0}}
+@keyframes glow{50%{box-shadow:0 0 26px rgb(var(--rgb)/.4)}}
+@keyframes pulse{0%{box-shadow:0 0 0 0 rgb(var(--rgb)/.55)}70%,100%{box-shadow:0 0 0 12px rgb(var(--rgb)/0)}}
 @keyframes float{to{transform:translate(-18px,20px) scale(1.15)}}
+@keyframes bob{to{transform:translateY(-4px) rotate(4deg)}}
+@keyframes sk{to{background-position:-300% 0}}
+.calm *,.calm *::before,.calm *::after{animation:none!important;transition:none!important}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
 <header>
   <div class="lang"><button id="en">EN</button><button id="ru">RU</button></div>
-  <h1>velocity shop</h1><span></span>
+  <h1>velocity shop</h1>
+  <button id="cog" aria-label="Settings">⚙</button>
 </header>
 <main id="app"></main>
 <div id="toast"></div>
@@ -92,110 +125,164 @@ input:focus,textarea:focus{border-color:var(--acc);box-shadow:0 0 0 3px var(--gl
 // ====== SET THIS to the public HTTPS address of your bot server (bot.py) ======
 const API = "https://matador-even-freeload.ngrok-free.dev/api";
 // ==============================================================================
-const tg = Telegram.WebApp; tg.ready(); tg.expand(); try { tg.setHeaderColor("#04121c"); tg.setBackgroundColor("#04121c"); } catch (e) {}
+const tg = Telegram.WebApp; tg.ready(); tg.expand();
+const store = (k, d) => { try { return localStorage.getItem(k) ?? d; } catch (e) { return d; } };
+const save = (k, v) => { try { localStorage.setItem(k, v); } catch (e) {} };
+const PRESETS = ["#ff3b30", "#ff9500", "#ffd60a", "#30d158", "#22d3ee", "#0a84ff", "#bf5af2", "#ff2d95"];
+const CATS = [["3d", "🧊", "c3d"], ["2d", "✨", "c2d"], ["outro", "🎞", "cout"]];
+const THEMES = [["ocean", "thOcean", "#22d3ee", "#3b82f6"], ["neon", "thNeon", "#c77dff", "#ff4fd8"], ["sunset", "thSunset", "#ff9f43", "#ff4d4d"], ["forest", "thForest", "#34e08a", "#12b5a6"], ["light", "thLight", "#e6f4ff", "#2563eb"]];
+const LINKS = [["🎵 ᴠᴇʟᴏᴄɪᴛʏ", "https://www.tiktok.com/@velocity.vq"], ["🎵 ᴄᴏᴍᴇᴛ", "https://www.tiktok.com/@comet.szc"], ["📢 ᴠᴇʟᴏᴄɪᴛʏ x ᴄᴏᴍᴇᴛ", "https://t.me/velocityvq"],
+  ["💬 ᴠᴇʟᴏᴄɪᴛʏ чат", "https://t.me/velocitychat"], ["🎬 clips velocity", "https://t.me/velocityclips"], ["🎮 Discord", "https://discord.gg/HxueU94Ygv"]];
 const T = {
-en:{wm:"Watermarks",rew:"Rewards",rev:"Reviews",from:"prices starting from",back:"← Back to main menu",order:"Order",soon:"Coming soon: products will appear here.",
- fmt:"Format",pc:"PC (mov)",mob:"Mobile (mp4)",both:"Both",note:"⏳ Order might take up to 3 days",buy:"Order now",
- off:"shop-wide discount",
- wheel:"Welcome wheel",wheelInfo:"One free spin: win a 10–50% discount for 3 days.",spin:"Spin",active:"Your discount",until:"until",ref:"Friend referral",code:"Your code",
- enter:"Friend's code",apply:"Apply",refInfo:"Enter a friend's code to get 10% off your next order.",refOn:"10% referral discount ready",
- revLock:"Reviews unlock after your first purchase.",rating:"Rating (0.0–10.0)",text:"Short text (optional)",send:"Send review",none:"No reviews yet",
- bought:"Buy something first",used:"Already used",invalid:"Invalid input",auth:"Open this app from the bot",
- offline:"Shop not loaded. Open it from the bot (Discover my shop button), and check that the API address in index.html is correct and the bot is running.",heroB:"After Effects",heroT:"Animated text watermarks",heroS:"Your name, animated and delivered right here in the chat.",f1:"🎞 PC .mov + mobile .mp4",f2:"✏️ Your own name",f3:"⭐ Pay with Stars",follow:"Follow us",emptyT:"New watermarks are on the way",name:"Name for your watermark",namePh:"e.g. Velocity",nameReq:"Please enter a name",done:"Paid! You'll get a message from the bot.",saved:"Review saved",copy:"Copied",disc:"discount",avg:"average"},
-ru:{wm:"Водяные знаки",rew:"Награды",rev:"Отзывы",from:"цены от",back:"← В главное меню",order:"Заказать",soon:"Скоро: здесь появятся товары.",
- fmt:"Формат",pc:"ПК (mov)",mob:"Мобильный (mp4)",both:"Оба",note:"⏳ Заказ может занять до 3 дней",buy:"Заказать",
- off:"скидка на весь магазин",
- wheel:"Колесо приветствия",wheelInfo:"Один бесплатный спин: скидка 10–50% на 3 дня.",spin:"Крутить",active:"Ваша скидка",until:"до",ref:"Реферальный код",code:"Ваш код",
- enter:"Код друга",apply:"Применить",refInfo:"Введите код друга и получите 10% скидку на следующий заказ.",refOn:"Скидка 10% по коду готова",
- revLock:"Отзывы доступны после первой покупки.",rating:"Оценка (0.0–10.0)",text:"Короткий текст (необязательно)",send:"Отправить отзыв",none:"Отзывов пока нет",
- bought:"Сначала сделайте покупку",used:"Уже использовано",invalid:"Неверный ввод",auth:"Откройте приложение из бота",
- offline:"Магазин не загрузился. Откройте его из бота (кнопка магазина), проверьте адрес API в index.html и что бот запущен.",heroB:"After Effects",heroT:"Анимированные водяные знаки",heroS:"Ваше имя в анимации, доставка прямо в этот чат.",f1:"🎞 ПК .mov + мобильный .mp4",f2:"✏️ Ваше имя",f3:"⭐ Оплата звёздами",follow:"Мы в соцсетях",emptyT:"Новые водяные знаки скоро появятся",name:"Имя для вашего водяного знака",namePh:"например, Velocity",nameReq:"Введите имя",done:"Оплачено! Бот пришлёт сообщение.",saved:"Отзыв сохранён",copy:"Скопировано",disc:"скидка",avg:"средняя"}};
-let L = localStorage.getItem("l") || (tg.initDataUnsafe?.user?.language_code === "ru" ? "ru" : "en");
+en:{back:"← Back to main menu",order:"Order",soon:"Coming soon",fmt:"Format",pc:"PC (mov)",mob:"Mobile (mp4)",both:"Both",note:"⏳ Order might take up to 3 days",buy:"Order now",off:"shop-wide discount",
+ name:"Name for your watermark",namePh:"e.g. Velocity",nameReq:"Please enter a name",color:"Color",custom:"Custom color",colorReq:"Please choose a color",colorsTag:"Color choice",
+ wheel:"Welcome wheel",wheelInfo:"One free spin: win a 10–50% discount for 3 days.",spin:"Spin",active:"Your discount",until:"until",ref:"Friend referral",code:"Your code",enter:"Friend's code",apply:"Apply",
+ refInfo:"Enter a friend's code to get 10% off your next order.",refOn:"10% referral discount ready",rew:"Rewards",rev:"Reviews",revLock:"Reviews unlock after your first purchase.",rating:"Rating (0.0–10.0)",text:"Short text (optional)",
+ send:"Send review",none:"No reviews yet",invalid:"Invalid input",used:"Already used",bought:"Buy something first",auth:"Open this app from the bot",done:"Paid! You'll get a message from the bot.",saved:"Review saved",copy:"Copied",avg:"average",payWith:"Pay with",payStars:"⭐ Stars",payUsd:"💵 Dollars (Wallet)",usdWait:"Finish the payment in Wallet. The bot will message you when it is confirmed.",usdOff:"Dollar payments are not available",
+ heroB:"After Effects",heroT:"Animated text watermarks",heroS:"Your name, animated and delivered right here in the chat.",f1:"🎞 PC .mov + mobile .mp4",f2:"✏️ Your own name",f3:"⭐ Pay with Stars",
+ follow:"Follow us",more:"More",emptyT:"New designs are on the way",offline:"Shop not loaded. Open it from the bot (Discover my shop button), and check that the API address in index.html is correct and the bot is running.",retry:"Try again",
+ settings:"Settings",theme:"Design",anim:"Animations",on:"On",off2:"Off",close:"Close",thOcean:"Ocean",thNeon:"Neon",thSunset:"Sunset",thForest:"Forest",thLight:"Light",
+ c3d:"3D watermarks",c2d:"2D watermarks",cout:"Outros",designs:"designs",fromS:"from",tapFull:"Tap a video to view it full screen"},
+ru:{back:"← В главное меню",order:"Заказать",soon:"Скоро",fmt:"Формат",pc:"ПК (mov)",mob:"Мобильный (mp4)",both:"Оба",note:"⏳ Заказ может занять до 3 дней",buy:"Заказать",off:"скидка на весь магазин",
+ name:"Имя для вашего водяного знака",namePh:"например, Velocity",nameReq:"Введите имя",color:"Цвет",custom:"Свой цвет",colorReq:"Выберите цвет",colorsTag:"Выбор цвета",
+ wheel:"Колесо приветствия",wheelInfo:"Один бесплатный спин: скидка 10–50% на 3 дня.",spin:"Крутить",active:"Ваша скидка",until:"до",ref:"Реферальный код",code:"Ваш код",enter:"Код друга",apply:"Применить",
+ refInfo:"Введите код друга и получите 10% скидку на следующий заказ.",refOn:"Скидка 10% по коду готова",rew:"Награды",rev:"Отзывы",revLock:"Отзывы доступны после первой покупки.",rating:"Оценка (0.0–10.0)",text:"Короткий текст (необязательно)",
+ send:"Отправить отзыв",none:"Отзывов пока нет",invalid:"Неверный ввод",used:"Уже использовано",bought:"Сначала сделайте покупку",auth:"Откройте приложение из бота",done:"Оплачено! Бот пришлёт сообщение.",saved:"Отзыв сохранён",copy:"Скопировано",avg:"средняя",payWith:"Оплата",payStars:"⭐ Звёзды",payUsd:"💵 Доллары (Wallet)",usdWait:"Завершите оплату в Wallet. Бот напишет вам, когда платёж подтвердится.",usdOff:"Оплата долларами недоступна",
+ heroB:"After Effects",heroT:"Анимированные водяные знаки",heroS:"Ваше имя в анимации, доставка прямо в этот чат.",f1:"🎞 ПК .mov + мобильный .mp4",f2:"✏️ Ваше имя",f3:"⭐ Оплата звёздами",
+ follow:"Мы в соцсетях",more:"Ещё",emptyT:"Новые работы скоро появятся",offline:"Магазин не загрузился. Откройте его из бота (кнопка магазина), проверьте адрес API в index.html и что бот запущен.",retry:"Повторить",
+ settings:"Настройки",theme:"Оформление",anim:"Анимации",on:"Вкл",off2:"Выкл",close:"Закрыть",thOcean:"Океан",thNeon:"Неон",thSunset:"Закат",thForest:"Лес",thLight:"Светлая",
+ c3d:"3D водяные знаки",c2d:"2D водяные знаки",cout:"Аутро",designs:"работ",fromS:"от",tapFull:"Нажмите на видео для полного экрана"}};
+let L = store("l", tg.initDataUnsafe?.user?.language_code === "ru" ? "ru" : "en"), TH = store("th", "ocean"), AN = store("an", "1") === "1";
 const t = k => T[L][k] || k;
-let lastErr = "", S = null, P = [], view = "home", R = {reviews: [], avg: null};
+let S = null, P = [], view = "home", cat = "3d", R = {reviews: [], avg: null}, lastErr = "", failed = false;
 const $ = s => document.querySelector(s), app = $("#app");
+const esc = s => String(s).replace(/[&<>"]/g, c => ({"&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;"}[c]));
+const BASE = API.replace(/\/api$/, ""), vid = p => BASE + p.video, title = p => p.title[L] || p.title.en;
+const disc = () => Math.min(90, S.shop + S.pers);
+const usd = p => (price(p) * S.usd_cents / 100).toFixed(2);
+const price = p => Math.max(1, Math.ceil(p.stars * (100 - disc()) / 100));
+const cnt = n => L === "ru" ? `${n} ${n % 10 === 1 && n % 100 !== 11 ? "работа" : n % 10 >= 2 && n % 10 <= 4 && (n % 100 < 10 || n % 100 >= 20) ? "работы" : "работ"}` : `${n} ${n === 1 ? "design" : "designs"}`;
+const fmtDate = ms => new Date(ms * 1000).toLocaleString(L === "ru" ? "ru" : "en", {day: "numeric", month: "short", hour: "2-digit", minute: "2-digit"});
 
-function toast(m){const e=$("#toast");e.textContent=m;e.classList.add("on");setTimeout(()=>e.classList.remove("on"),2200)}
+function toast(m, ms = 2200) { const e = $("#toast"); e.textContent = m; e.classList.add("on"); setTimeout(() => e.classList.remove("on"), ms); }
+function applyPrefs() {
+  const r = document.documentElement; r.dataset.theme = TH; r.classList.toggle("calm", !AN);
+  try { const bg = getComputedStyle(r).getPropertyValue("--bg").trim(); tg.setHeaderColor(bg); tg.setBackgroundColor(bg); } catch (e) {}
+}
 async function api(a, d = {}) {
   try {
-    const r = await fetch(API, {method:"POST", headers:{"Content-Type":"application/json","ngrok-skip-browser-warning":"1"}, body:JSON.stringify({a, init:tg.initData, ...d})});
+    const r = await fetch(API, {method: "POST", headers: {"Content-Type": "application/json", "ngrok-skip-browser-warning": "1"}, body: JSON.stringify({a, init: tg.initData, ...d})});
     const j = await r.json(); if (j.state) { S = j.state; P = S.products; } if (j.err) { lastErr = "Server answered: " + j.err; toast(t(j.err)); } return j;
   } catch (e) { lastErr = "Network error (" + API + "): " + e.message; toast("Network error"); return {}; }
 }
-const disc = () => Math.min(90, S.shop + S.pers);
-const price = p => Math.max(1, Math.ceil(p.stars * (100 - disc()) / 100));
-const BASE = API.replace(/\/api$/, ""), vid = p => BASE + p.video;
-const title = p => p.title[L] || p.title.en;
-const fmtDate = ms => new Date(ms * 1000).toLocaleString(L === "ru" ? "ru" : "en", {day:"numeric", month:"short", hour:"2-digit", minute:"2-digit"});
-const back = () => `<button class="back" onclick="go('home')">${t("back")}</button>`;
-const backTo = (v, label) => `<button class="back" onclick="go('${v}')">← ${label}</button>`;
-function enter() { app.classList.add("enter"); setTimeout(() => app.classList.remove("enter"), 1100); }
-function go(v) { enter(); view = v; draw(); scrollTo(0, 0); }
-
-function draw() {
-  $("#en").classList.toggle("on", L === "en"); $("#ru").classList.toggle("on", L === "ru");
-  document.documentElement.lang = L;
-  if (!S) { app.innerHTML = `<p class="note">${t("offline")}<br><br><small>${esc(lastErr)}</small></p>`; return; }
-  ({home, wm, rew, rev})[view]();
-}
-
-const LINKS = [["🎵 ᴠᴇʟᴏᴄɪᴛʏ", "https://www.tiktok.com/@velocity.vq"], ["🎵 ᴄᴏᴍᴇᴛ", "https://www.tiktok.com/@comet.szc"], ["📢 ᴠᴇʟᴏᴄɪᴛʏ x ᴄᴏᴍᴇᴛ", "https://t.me/velocityvq"],
-  ["💬 ᴠᴇʟᴏᴄɪᴛʏ чат", "https://t.me/velocitychat"], ["🎬 clips velocity", "https://t.me/velocityclips"], ["🎮 Discord", "https://discord.gg/HxueU94Ygv"]];
-const card = (ic, tt, sub, fn, cls = "") => `<button class="big ${cls}" onclick="${fn}"><i class="ic">${ic}</i><div><b>${tt}</b><span>${sub}</span></div><em>›</em></button>`;
-function home() {
-  const min = P.length ? Math.min(...P.map(price)) : 0;
-  app.innerHTML = `
-  <div class="hero"><span class="badge">${t("heroB")}</span><h2>${t("heroT")}</h2><p>${t("heroS")}</p><div class="chips"><span>${t("f1")}</span><span>${t("f2")}</span><span>${t("f3")}</span></div></div>
-  ${card("🎬", t("wm"), P.length ? `${t("from")} ${min} ⭐` : t("soon"), "go('wm')", "first")}
-  ${card("🎁", t("rew"), `${t("wheel")} · ${t("ref")}`, "go('rew')")}
-  ${card("⭐", t("rev"), R.avg != null ? `${R.avg} / 10 ${t("avg")}` : t("none"), "openRev()")}
-  <p class="sec">${t("follow")}</p><div class="links">${LINKS.map(([n, u]) => `<button onclick="openLink('${u}')">${n}</button>`).join("")}</div>`;
-}
-const openLink = u => u.includes("t.me/") ? tg.openTelegramLink(u) : tg.openLink(u);
-
-function wm() {
-  app.innerHTML = back() + (disc() ? `<p style="margin-bottom:10px"><span class="tag">−${disc()}%</span> <span class="mut">${t("off")}</span></p>` : "") +
-  (P.length ? `<div class="grid">${P.map(p => { const s = price(p), o = p.stars;
-    return `<div class="item"><div class="vw" style="padding:0;display:block;flex:none"><video data-src="${vid(p)}" autoplay muted loop playsinline></video>${disc() ? `<span class="tag corner">−${disc()}%</span>` : ""}</div><div><h3>${title(p)}</h3>
-    <span>${disc() ? `<span class="old">${o} ⭐</span> ` : ""}<b>${s} ⭐</b></span>
-    <button class="btn" onclick="openOrder('${p.id}')">${t("order")}</button></div></div>`; }).join("")}</div>` : `<div class="empty"><i class="ic">🎞</i><p class="mut">${t("emptyT")}</p></div>`);
-  loadVideos();
+function confetti() {
+  if (document.documentElement.classList.contains("calm")) return;
+  const box = document.createElement("div"); box.className = "cf"; document.body.append(box);
+  const cols = ["var(--acc)", "var(--acc2)", "var(--ok)", "#fff", "#ffd166"], rn = n => (Math.random() - .5) * n;
+  for (let i = 0; i < 40; i++) {
+    const s = document.createElement("i"); s.style.cssText = `left:${50 + rn(20)}%;top:55%;background:${cols[i % 5]}`; box.append(s);
+    s.animate([{transform: "translate(0,0) rotate(0)", opacity: 1}, {transform: `translate(${rn(340)}px,${-120 - Math.random() * 260}px) rotate(${Math.random() * 720}deg)`, opacity: 1, offset: .6},
+      {transform: `translate(${rn(420)}px,${160 + Math.random() * 200}px) rotate(${Math.random() * 900}deg)`, opacity: 0}], {duration: 1400 + Math.random() * 600, easing: "cubic-bezier(.2,.7,.3,1)", fill: "forwards"});
+  }
+  setTimeout(() => box.remove(), 2300);
 }
 const blobs = {};
+async function getBlob(u) {
+  if (!blobs[u]) { const r = await fetch(u, {headers: {"ngrok-skip-browser-warning": "1"}}); if (!r.ok) throw 0; blobs[u] = URL.createObjectURL(await r.blob()); }
+  return blobs[u];
+}
 async function loadVideos() {
-  for (const v of document.querySelectorAll("video[data-src]")) {
-    const u = v.dataset.src;
-    try {
-      if (!blobs[u]) { const r = await fetch(u, {headers: {"ngrok-skip-browser-warning": "1"}}); if (!r.ok) throw 0; blobs[u] = URL.createObjectURL(await r.blob()); }
-      v.src = blobs[u]; v.play().catch(() => {});
-    } catch (e) {}
-  }
+  await Promise.all([...document.querySelectorAll("video[data-src]")].map(async v => {
+    try { v.onloadeddata = () => v.parentElement.classList.add("ready"); v.src = await getBlob(v.dataset.src); v.play().catch(() => {}); } catch (e) {}
+  }));
+}
+async function zoom(id) {
+  const p = P.find(x => x.id === id); let src; try { src = await getBlob(vid(p)); } catch (e) { src = vid(p); }
+  const el = document.createElement("div"); el.className = "lb";
+  el.innerHTML = `<button class="lbx" aria-label="Close">✕</button><video src="${src}" autoplay loop playsinline controls></video><p>${esc(title(p))}</p>`;
+  document.body.append(el); try { tg.requestFullscreen && tg.requestFullscreen(); } catch (e) {}
+  const close = () => { el.classList.add("out"); setTimeout(() => el.remove(), 250); try { tg.exitFullscreen && tg.exitFullscreen(); } catch (e) {} };
+  el.onclick = e => { if (e.target.tagName !== "VIDEO") close(); };
+}
+
+function enter() { app.classList.add("enter"); setTimeout(() => app.classList.remove("enter"), 1100); }
+function go(v, c) { enter(); view = v; if (c) cat = c; draw(); scrollTo(0, 0); }
+const back = () => `<button class="back" onclick="go('home')">${t("back")}</button>`;
+const card = (ic, tt, sub, fn, cls = "", d = 0) => `<button class="big ${cls}" onclick="${fn}"><i class="ic" style="--d:${d}s">${ic}</i><div><b>${tt}</b><span>${sub}</span></div><em>›</em></button>`;
+const openLink = u => u.includes("t.me/") ? tg.openTelegramLink(u) : tg.openLink(u);
+
+function draw() {
+  $("#en").classList.toggle("on", L === "en"); $("#ru").classList.toggle("on", L === "ru"); document.documentElement.lang = L;
+  if (!S) { app.innerHTML = failed ? `<p class="note">${t("offline")}<br><br><small>${esc(lastErr)}</small></p><button class="btn" onclick="boot()">${t("retry")}</button>` :
+    `<div class="sk" style="height:150px"></div><div class="sk" style="height:78px"></div><div class="sk" style="height:78px"></div><div class="sk" style="height:78px"></div>`; return; }
+  ({home, cat: catView, rew, rev})[view]();
+}
+
+function home() {
+  const cc = CATS.map(([k, ic, tk], i) => { const l = P.filter(p => p.category === k), m = l.length ? Math.min(...l.map(price)) : 0;
+    return card(ic, t(tk), l.length ? `${cnt(l.length)} · ${t("fromS")} ${m} ⭐` : t("soon"), `go('cat','${k}')`, i === 0 ? "first" : "", i * .6); }).join("");
+  app.innerHTML = `
+  <div class="hero"><span class="badge">${t("heroB")}</span><h2>${t("heroT")}</h2><p>${t("heroS")}</p><div class="chips"><span>${t("f1")}</span><span>${t("f2")}</span><span>${t("f3")}</span></div></div>
+  ${cc}<p class="sec">${t("more")}</p>
+  ${card("🎁", t("rew"), `${t("wheel")} · ${t("ref")}`, "go('rew')", "", 1.8)}
+  ${card("⭐", t("rev"), R.avg != null ? `${R.avg} / 10 ${t("avg")}` : t("none"), "openRev()", "", 2.4)}
+  <p class="sec">${t("follow")}</p><div class="links">${LINKS.map(([n, u]) => `<button onclick="openLink('${u}')">${n}</button>`).join("")}</div>`;
+}
+
+function catView() {
+  const c = CATS.find(x => x[0] === cat), list = P.filter(p => p.category === cat);
+  app.innerHTML = back() + `<h2 class="ptitle">${c[1]} ${t(c[2])}</h2>` + (disc() ? `<p style="margin:6px 0 10px"><span class="tag">−${disc()}%</span> <span class="mut">${t("off")}</span></p>` : "") +
+  (list.length ? `<p class="hint">${t("tapFull")}</p><div class="grid">${list.map(p => `<div class="item"><div class="vw" onclick="zoom('${p.id}')"><video data-src="${vid(p)}" autoplay muted loop playsinline></video><span class="exp">⤢</span>${disc() ? `<span class="tag corner">−${disc()}%</span>` : ""}</div>
+    <div class="meta"><h3>${esc(title(p))}</h3>${p.colors ? `<span class="mini">🎨 ${t("colorsTag")}</span>` : ""}<span>${disc() ? `<span class="old">${p.stars} ⭐</span> ` : ""}<b>${price(p)} ⭐</b>${S.usd_on ? `<span class="mut"> · $${usd(p)}</span>` : ""}</span>
+    <button class="btn" onclick="openOrder('${p.id}')">${t("order")}</button></div></div>`).join("")}</div>` :
+    `<div class="empty"><i class="ic">${c[1]}</i><p class="mut">${t("emptyT")}</p></div>`);
+  loadVideos();
 }
 
 function openOrder(id) {
-  const p = P.find(x => x.id === id), el = document.createElement("div"); el.className = "sheet";
-  el.innerHTML = `<div><h2 style="margin-bottom:8px">${title(p)}</h2>
+  const p = P.find(x => x.id === id); let col = PRESETS[0];
+  const el = document.createElement("div"); el.className = "sheet";
+  el.innerHTML = `<div><div class="grab"></div><h2>${esc(title(p))}</h2>
   <p class="mut">${t("name")}</p><input id="nm" maxlength="40" placeholder="${t("namePh")}" autocomplete="off" style="margin:6px 0 10px">
-  <p class="mut">${t("fmt")}</p><div class="opt">${[["pc","pc"],["mobile","mob"],["both","both"]].map(([v,k],i)=>`<label><input type="radio" name="f" value="${v}" ${i?"":"checked"}><span>${t(k)}</span></label>`).join("")}</div>
-  <p id="tot" style="font-size:20px;font-weight:800"></p><div class="note">${t("note")}</div>
+  ${p.colors ? `<p class="mut">${t("color")}</p><div class="sw">${PRESETS.map((c, i) => `<button class="dot ${i ? "" : "on"}" data-c="${c}" style="background:${c}" aria-label="${c}"></button>`).join("")}<label class="dot cust" title="${t("custom")}"><input type="color" id="cc" value="#ffffff"><span>+</span></label></div>` : ""}
+  <p class="mut">${t("fmt")}</p><div class="opt">${[["pc", "pc"], ["mobile", "mob"], ["both", "both"]].map(([v, k], i) => `<label><input type="radio" name="f" value="${v}" ${i ? "" : "checked"}><span>${t(k)}</span></label>`).join("")}</div>
+  ${S.usd_on ? `<p class="mut">${t("payWith")}</p><div class="opt">${[["stars", "payStars"], ["usd", "payUsd"]].map(([v, k], i) => `<label><input type="radio" name="c" value="${v}" ${i ? "" : "checked"}><span>${t(k)}</span></label>`).join("")}</div>` : ""}
+  <p class="pr" id="pr">${price(p)} ⭐</p><div class="note">${t("note")}</div>
   <button class="btn" id="go">${t("buy")}</button><button class="btn alt" style="margin-top:8px" id="x">✕</button></div>`;
   document.body.append(el);
-  const val = n => el.querySelector(`input[name=${n}]:checked`).value;
-  const upd = () => { $("#tot").textContent = price(p) + " ⭐"; };
-  el.addEventListener("change", upd); upd();
-  $("#x").onclick = () => el.remove();
+  const dots = el.querySelectorAll(".dot"), pick = (d, c) => { dots.forEach(x => x.classList.remove("on")); d.classList.add("on"); col = c; };
+  el.querySelectorAll(".dot[data-c]").forEach(d => d.onclick = () => pick(d, d.dataset.c));
+  const cc = el.querySelector("#cc"); if (cc) cc.oninput = () => pick(cc.parentElement, cc.value);
+  const upd = () => { const c = el.querySelector("input[name=c]:checked")?.value; $("#pr").textContent = c === "usd" ? "$" + usd(p) : price(p) + " ⭐"; };
+  el.addEventListener("change", upd);
+  $("#x").onclick = () => el.remove(); el.onclick = e => { if (e.target === el) el.remove(); };
   $("#go").onclick = async () => {
     const nm = $("#nm").value.trim(); if (!nm) return toast(t("nameReq"));
-    $("#go").disabled = true; const j = await api("order", {pid:id, fmt:val("f"), name:nm});
-    if (j.link) tg.openInvoice(j.link, st => { if (st === "paid") { toast(t("done")); el.remove(); } else $("#go").disabled = false; });
-    else if (j.done) { toast(t("done")); el.remove(); draw(); } else $("#go").disabled = false;
+    $("#go").disabled = true; const pay = el.querySelector("input[name=c]:checked")?.value || "stars";
+    const j = await api("order", {pid: id, fmt: el.querySelector("input[name=f]:checked").value, name: nm, color: p.colors ? col : "", pay});
+    if (j.link && pay === "usd") { openLink(j.link); toast(t("usdWait"), 7000); el.remove(); }
+    else if (j.link) tg.openInvoice(j.link, st => { if (st === "paid") { toast(t("done")); confetti(); el.remove(); } else $("#go").disabled = false; });
+    else $("#go").disabled = false;
   };
 }
 
+function openSettings() {
+  const el = document.createElement("div"); el.className = "sheet";
+  el.innerHTML = `<div><div class="grab"></div><h2>⚙ ${t("settings")}</h2><p class="mut">${t("theme")}</p>
+  <div class="themes">${THEMES.map(([k, n, a, b]) => `<button class="th ${k === TH ? "on" : ""}" data-k="${k}"><i class="sq" style="background:linear-gradient(135deg,${a},${b})"></i><span>${t(n)}</span></button>`).join("")}</div>
+  <p class="mut" style="margin-top:14px">${t("anim")}</p><button class="btn alt ${AN ? "on" : ""}" id="an" style="margin-top:6px">${AN ? "✓ " + t("on") : t("off2")}</button>
+  <button class="btn alt" style="margin-top:14px" id="x">${t("close")}</button></div>`;
+  document.body.append(el);
+  el.querySelectorAll(".th").forEach(b => b.onclick = () => { TH = b.dataset.k; save("th", TH); applyPrefs(); el.querySelectorAll(".th").forEach(x => x.classList.toggle("on", x === b)); enter(); draw(); });
+  $("#an").onclick = e => { AN = !AN; save("an", AN ? "1" : "0"); applyPrefs(); e.target.classList.toggle("on", AN); e.target.textContent = AN ? "✓ " + t("on") : t("off2"); };
+  $("#x").onclick = () => el.remove(); el.onclick = e => { if (e.target === el) el.remove(); };
+}
+
 function rew() {
-  const wLeft = S.wexp > Date.now() / 1000;
-  app.innerHTML = back() + `  <div class="box"><h2>🎡 ${t("wheel")}</h2><p class="mut">${t("wheelInfo")}</p><div class="wheelwrap"><span class="ptr">▼</span><div class="wheel" id="wh" style="transform:rotate(${S.wheel_used ? 360 - ([10,20,30,40,50].indexOf(S.wp) * 72 + 36) : 0}deg)">${[10,20,30,40,50].map((p, i) => `<span style="transform:rotate(${i * 72 + 36}deg) translateY(-62px)">${p}%</span>`).join("")}</div></div>
-  <p id="wres" style="text-align:center;min-height:28px;font-size:18px;font-weight:800;margin-top:6px">${S.wheel_used ? (wLeft ? `${t("active")}: −${S.wp}% ${t("until")} ${fmtDate(S.wexp)}` : "") : ""}</p>
+  const wLeft = S.wexp > Date.now() / 1000, idx = [10, 20, 30, 40, 50].indexOf(S.wp);
+  app.innerHTML = back() + `<div class="box"><h2>🎡 ${t("wheel")}</h2><p class="mut">${t("wheelInfo")}</p>
+   <div class="wheelwrap"><span class="ptr">▼</span><div class="wheel" id="wh" style="transform:rotate(${S.wheel_used ? 360 - (idx * 72 + 36) : 0}deg)">${[10, 20, 30, 40, 50].map((p, i) => `<span style="transform:rotate(${i * 72 + 36}deg) translateY(-62px)">${p}%</span>`).join("")}</div></div>
+   <p style="text-align:center;min-height:28px;font-size:18px;font-weight:800;margin-top:6px">${S.wheel_used ? (wLeft ? `${t("active")}: −${S.wp}% ${t("until")} ${fmtDate(S.wexp)}` : "") : ""}</p>
    <button class="btn ${S.wheel_used ? "" : "pulse"}" style="margin-top:8px" ${S.wheel_used ? "disabled" : ""} onclick="spin()">${t("spin")}</button></div>
   <div class="box"><h2>🤝 ${t("ref")}</h2><p class="mut">${t("refInfo")}</p>
    <div class="row"><input readonly value="${S.code}"><button class="btn alt" style="width:auto;margin:0" onclick="navigator.clipboard?.writeText('${S.code}');toast(t('copy'))">⧉</button></div>
@@ -205,25 +292,28 @@ async function spin() {
   const j = await api("wheel"); if (j.err) return draw();
   const i = [10, 20, 30, 40, 50].indexOf(j.won);
   $("#wh").style.transform = `rotate(${360 * 5 + 360 - (i * 72 + 36)}deg)`;
-  setTimeout(() => { toast("🎉 −" + j.won + "%"); draw(); }, 3400);
+  setTimeout(() => { toast("🎉 −" + j.won + "%"); confetti(); draw(); }, 3400);
 }
-async function applyRef(){const j=await api("ref",{code:$("#rc").value});if(!j.err)toast("✅");draw()}
+async function applyRef() { const j = await api("ref", {code: $("#rc").value}); if (!j.err) { toast("✅"); confetti(); } draw(); }
 
 async function openRev() { const j = await api("reviews"); R = {reviews: j.reviews || [], avg: j.avg}; go("rev"); }
 function rev() {
   app.innerHTML = back() + `<h2 style="margin-bottom:8px">⭐ ${t("rev")}${R.avg != null ? ` · ${R.avg}/10` : ""}</h2>` +
   (S.bought ? `<div class="box"><p class="mut">${t("rating")}</p><input id="rt" type="number" min="0" max="10" step="0.1" inputmode="decimal" value="${S.mine?.rating ?? ""}">
-    <p class="mut" style="margin-top:8px">${t("text")}</p><textarea id="rx" rows="2" maxlength="300">${S.mine?.text ?? ""}</textarea>
+    <p class="mut" style="margin-top:8px">${t("text")}</p><textarea id="rx" rows="2" maxlength="300">${esc(S.mine?.text ?? "")}</textarea>
     <button class="btn" style="margin-top:10px" onclick="sendRev()">${t("send")}</button></div>` : `<p class="note">${t("revLock")}</p>`) +
   (R.reviews.length ? R.reviews.map(r => `<div class="rev"><b>${r.rating.toFixed(1)}</b> · ${esc(r.name)}<br>${esc(r.text || "")}</div>`).join("") : `<p class="mut">${t("none")}</p>`);
 }
-const esc = s => String(s).replace(/[&<>"]/g, c => ({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]));
-async function sendRev() { const j = await api("review", {rating:$("#rt").value, text:$("#rx").value}); if (!j.err) { toast(t("saved")); openRev(); } }
+async function sendRev() { const j = await api("review", {rating: $("#rt").value, text: $("#rx").value}); if (!j.err) { toast(t("saved")); confetti(); openRev(); } }
 
-for (const l of ["en", "ru"]) $("#" + l).onclick = () => { L = l; localStorage.setItem("l", l); draw(); };
-(async () => {
-  await api("state"); const j = await api("reviews"); R = {reviews: j.reviews || [], avg: j.avg}; enter(); draw();
-})();
+for (const l of ["en", "ru"]) $("#" + l).onclick = () => { L = l; save("l", l); draw(); };
+$("#cog").onclick = openSettings;
+async function boot() {
+  failed = false; draw(); await api("state"); failed = !S;
+  if (S) { const j = await api("reviews"); R = {reviews: j.reviews || [], avg: j.avg}; }
+  enter(); draw();
+}
+applyPrefs(); draw(); boot();
 </script>
 </body>
 </html>
