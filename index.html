@@ -4,8 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>velocity shop</title>
+<meta name="color-scheme" content="dark light">
 <script src="https://telegram.org/js/telegram-web-app.js"></script>
-<link href="https://fonts.googleapis.com/css2?family=Sora:wght@400;600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Cinzel+Decorative:wght@700&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#04121c;--card:#0b2230;--line:#14465c;--tx:#e6fbff;--mut:#7eaabb;--acc:#22d3ee;--acc2:#3b82f6;--ok:#2ee6a6;--ink:#03202b;--rgb:34 211 238;--rgb2:59 130 246;--hero1:#0e4a63;--hero2:#0b2a55}
 [data-theme=neon]{--bg:#0e0620;--card:#1a0f36;--line:#3b2478;--tx:#f5eeff;--mut:#a595d6;--acc:#c77dff;--acc2:#ff4fd8;--ok:#5ef2b0;--ink:#1a0636;--rgb:199 125 255;--rgb2:255 79 216;--hero1:#4a1a7a;--hero2:#7a1a62}
@@ -112,14 +113,85 @@ input:focus,textarea:focus{border-color:var(--acc);box-shadow:0 0 0 3px rgb(var(
 .calm *,.calm *::before,.calm *::after{animation:none!important;transition:none!important}
 @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
+
+<style id="gx">
+:root{--bg:#07060a;--card:#130d15;--line:#41282f;--tx:#efe3cf;--mut:#ad9884;--acc:#c9a455;--acc2:#a3243b;--ok:#9cc48f;--ink:#1c0a0e;--rgb:201 164 85;--rgb2:163 36 59;--hero1:#43101c;--hero2:#14101f;--int:.7;--amb:.7;--mot:.7;--ease:cubic-bezier(.16,1,.3,1);--f:'Cormorant Garamond','Cormorant',Georgia,serif;--lat:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='44' height='44' fill='none' stroke='%23c9a455' stroke-opacity='.13'%3E%3Cpath d='M22 2 42 22 22 42 2 22Z'/%3E%3Ccircle cx='22' cy='22' r='6'/%3E%3Cpath d='M22 16v12M16 22h12'/%3E%3C/svg%3E")}
+[data-theme=crypt]{--bg:#07060a}
+[data-theme=ocean]{--bg:#050a16;--card:#0c1426;--line:#2b3b5e;--tx:#e8e6dc;--mut:#8f9cb8;--acc:#d2ad5c;--acc2:#4c70b8;--ok:#7fc4a6;--ink:#0a1020;--rgb:210 173 92;--rgb2:76 112 184;--hero1:#14284f;--hero2:#0b1230}
+[data-theme=neon]{--bg:#0b0613;--card:#170d24;--line:#4a2c5e;--tx:#f1e6f1;--mut:#b09bbd;--acc:#bd8fd6;--acc2:#c2355a;--ok:#a5d7a0;--ink:#1d0a24;--rgb:189 143 214;--rgb2:194 53 90;--hero1:#3d1659;--hero2:#4f1126}
+[data-theme=sunset]{--bg:#0f0605;--card:#1d0d0b;--line:#5c2a1e;--tx:#f4e4d2;--mut:#c19a82;--acc:#e0643f;--acc2:#8f1d2c;--ok:#d9b765;--ink:#240a06;--rgb:224 100 63;--rgb2:143 29 44;--hero1:#5e1a10;--hero2:#32080f}
+[data-theme=forest]{--bg:#050b09;--card:#0c1814;--line:#24473b;--tx:#e2ecdc;--mut:#8aa89a;--acc:#6fc09a;--acc2:#2f7d6b;--ok:#c8c27a;--ink:#04140d;--rgb:111 192 154;--rgb2:47 125 107;--hero1:#10382b;--hero2:#0b2523}
+[data-theme=light]{--bg:#e6dac0;--card:#f3eadb;--line:#bda985;--tx:#2a1b12;--mut:#6f5a45;--acc:#8b1e2d;--acc2:#7a5a1e;--ok:#3b6b3a;--ink:#f6ecd8;--rgb:139 30 45;--rgb2:122 90 30;--hero1:#d9c39a;--hero2:#e5cfae}
+body{font:17px/1.45 var(--f);letter-spacing:.01em}
+button,.back,.lang button,.links button,.btn,input,textarea{font-family:var(--f)!important}
+#bg{position:fixed;inset:0;width:100%;height:100%;z-index:-3;pointer-events:none}
+#cn{position:fixed;inset:0;z-index:-1;pointer-events:none;background:radial-gradient(60% 40% at 50% 0%,rgb(var(--rgb)/.22),transparent 70%);opacity:calc(.35 + var(--amb)*.5);animation:fl 5.3s ease-in-out infinite alternate}
+#gr{position:fixed;inset:-50%;z-index:60;pointer-events:none;opacity:calc(.05 + var(--amb)*.08);mix-blend-mode:overlay;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence baseFrequency='.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='160' height='160' filter='url(%23n)'/%3E%3C/svg%3E");animation:gr .9s steps(6) infinite}
+.no-can #cn,.no-grn #gr{display:none}
+body::before{opacity:.55}
+body::after{background:radial-gradient(120% 90% at 50% 40%,transparent 45%,rgb(0 0 0/.65));-webkit-mask-image:none;mask-image:none;animation:none;z-index:-1}
+@keyframes fl{0%{opacity:.55;transform:scale(1)}40%{opacity:.9}100%{opacity:.7;transform:scale(1.06) translateY(8px)}}
+@keyframes gr{to{transform:translate(-3%,2%)}}
+h1{font-family:'Cinzel Decorative','Cormorant Garamond',serif;font-size:19px;font-weight:700;letter-spacing:.04em;background:none;color:var(--tx);animation:none;-webkit-background-clip:border-box;display:flex;justify-content:center;align-items:center;gap:1px;white-space:nowrap}
+h1 .lt{display:inline-block;color:var(--tx);animation:lin 1.3s var(--ease) both,lit 7s ease-in-out infinite;animation-delay:calc(var(--i)*70ms + 2.9s),calc(var(--i)*260ms + 4.5s);animation-play-state:paused,paused;transition:transform .5s var(--ease),color .3s;transition-delay:calc(var(--i)*22ms)}
+body.ready h1 .lt{animation-play-state:running}
+h1:hover .lt{transform:translateY(-4px);color:var(--acc)}
+.rose{width:22px;height:22px;margin-right:7px;color:var(--acc);animation:spin 40s linear infinite;transition:filter .4s;filter:drop-shadow(0 0 4px rgb(var(--rgb)/.6))}
+h1:hover .rose{animation-duration:4s;filter:drop-shadow(0 0 10px rgb(var(--rgb)/.95))}
+h1 .rose path,h1 .rose circle{fill:none;stroke:currentColor;stroke-width:7}h1 .rose .gl{fill:var(--acc2);stroke:none}
+@keyframes lin{from{opacity:0;transform:translateY(14px) scale(1.4);filter:blur(8px)}}
+@keyframes lit{0%,100%{text-shadow:0 0 0 transparent}50%{color:var(--acc);text-shadow:0 0 14px rgb(var(--rgb)/.8)}}
+@keyframes spin{to{transform:rotate(360deg)}}
+.big,.item,.box,.th,.hero,.links button,.lang,#cog,.sheet>div{border-radius:5px}
+.big,.item,.box,.hero{background-image:var(--lat);box-shadow:inset 0 0 0 3px var(--bg),inset 0 0 0 4px rgb(var(--rgb)/.28)}
+.big.first,.hero{background-image:var(--lat),linear-gradient(135deg,rgb(var(--rgb)/.2),var(--card))}
+.hero{background-image:var(--lat),linear-gradient(135deg,var(--hero1),var(--hero2) 60%,var(--card));border-radius:90px 90px 6px 6px/46px 46px 6px 6px;padding:34px 22px 20px;text-align:center}
+.hero .chips{justify-content:center}
+.sheet>div{border-radius:26px 26px 0 0;background-image:var(--lat)}
+.ic,.th,.sq,.btn,.tag,.mini,.links button,.chips span{border-radius:4px}
+.badge,.sec{text-transform:none;font-variant:small-caps;letter-spacing:.14em;font-size:15px}
+.hero h2{font-size:28px;font-weight:700}.ptitle{font-size:26px}.big b{font-size:20px}.big span,.mut,.hint{font-size:15px}
+.btn,.big,#cog,.th,.links button,.lang button{position:relative;overflow:hidden;translate:var(--mx,0) var(--my,0);transition:transform .35s var(--ease),translate .55s var(--ease),box-shadow .4s,border-color .3s,filter .3s,background .3s,color .3s}
+.btn{font-size:17px;font-weight:700;letter-spacing:.08em;border:1px solid rgb(255 255 255/.18);box-shadow:inset 0 1px 0 rgb(255 255 255/.25),0 4px 16px rgb(var(--rgb)/.25)}
+.btn:active,.big:active,.th:active{transform:scale(.95)}
+.big::after,.btn::after{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 35%,rgb(255 255 255/.2) 50%,transparent 65%);translate:-130% 0;pointer-events:none}
+@media(hover:hover){.big:hover::after,.btn:hover::after{translate:130% 0;transition:translate .9s var(--ease)}
+.big:hover,.item:hover{transform:translateY(-3px);box-shadow:inset 0 0 0 3px var(--bg),inset 0 0 0 4px rgb(var(--rgb)/.6),0 12px 34px rgb(var(--rgb)/.3)}.big:hover em{transform:translateX(6px)}}
+.rip{position:absolute;border-radius:50%;background:rgb(var(--rgb)/.5);pointer-events:none;transform:translate(-50%,-50%) scale(0);animation:rp .8s var(--ease) forwards}
+@keyframes rp{to{transform:translate(-50%,-50%) scale(1);opacity:0}}
+.rv{opacity:0;filter:blur(6px);letter-spacing:.16em;transition:opacity 1.2s var(--ease),filter 1.2s var(--ease),letter-spacing 1.5s var(--ease);transition-delay:calc(var(--i,0)*80ms)}
+.rv.in{opacity:1;filter:none;letter-spacing:.01em}
+.tg{display:flex;justify-content:space-between;align-items:center;width:100%;margin-top:8px;padding:11px 12px;background:var(--card);border:1px solid var(--line);border-radius:5px;color:var(--tx);font-size:16px}
+.tg i{width:40px;height:22px;border-radius:12px;background:var(--line);position:relative;transition:background .4s var(--ease)}
+.tg i::after{content:"";position:absolute;left:3px;top:3px;width:16px;height:16px;border-radius:50%;background:var(--tx);transition:transform .5s var(--ease)}
+.tg.on i{background:linear-gradient(135deg,var(--acc),var(--acc2))}.tg.on i::after{transform:translateX(18px)}
+.rg{display:block;margin-top:12px;color:var(--tx);font-size:16px}input[type=range]{padding:0;border:0;background:none;accent-color:var(--acc);margin-top:6px}
+.wheel{border-radius:50%!important}
+#ld{position:fixed;inset:0;z-index:100;display:grid;place-items:center;overflow:hidden;pointer-events:all}
+#ld .dr{position:absolute;top:0;bottom:0;width:50.2%;background:radial-gradient(90% 60% at 50% 40%,#1b0c14,#050407);background-image:var(--lat),radial-gradient(90% 60% at 50% 40%,#1b0c14,#050407);transition:transform 1.3s cubic-bezier(.77,0,.18,1) .35s}
+#ld .l{left:0;border-right:1px solid #c9a45566}#ld .r{right:0;border-left:1px solid #c9a45566}
+#ld.open .l{transform:translateX(-101%)}#ld.open .r{transform:translateX(101%)}
+.lc{position:relative;text-align:center;transition:opacity .6s,transform 1s var(--ease)}#ld.open .lc{opacity:0;transform:scale(1.5)}
+.lrw svg{width:min(60vw,220px);height:auto;color:#c9a455;filter:drop-shadow(0 0 14px #c9a45588);animation:spin 50s linear infinite}
+.lrw path,.lrw circle{fill:none;stroke:currentColor;stroke-width:1.2;stroke-dasharray:1;stroke-dashoffset:1;animation:dr 2.2s var(--ease) forwards;animation-delay:calc(var(--k)*90ms)}
+.lrw .gl{fill:#a3243b;stroke:none;stroke-dasharray:none;opacity:0;animation:gl 3s ease-in-out .9s infinite alternate}
+@keyframes dr{to{stroke-dashoffset:0}}@keyframes gl{0%{opacity:.3}to{opacity:.95}}
+.lt2{margin-top:18px;font:700 22px 'Cinzel Decorative',serif;color:#efe3cf;display:flex;justify-content:center;gap:1px}
+.lt2 b{display:inline-block;font-weight:700;animation:lin 1.2s var(--ease) both;animation-delay:calc(1s + var(--i)*70ms)}
+.lb2{width:150px;height:2px;margin:16px auto 0;background:#41282f;overflow:hidden}.lb2 i{display:block;height:100%;background:linear-gradient(90deg,#a3243b,#c9a455);transform-origin:left;animation:ld 2.4s cubic-bezier(.5,0,.2,1) forwards}
+@keyframes ld{from{transform:scaleX(0)}}
+@media(max-width:380px){h1{font-size:16px}.hero h2{font-size:24px}}
+</style>
 </head>
 <body>
 <header>
   <div class="lang"><button id="en">EN</button><button id="ru">RU</button></div>
-  <h1>velocity shop</h1>
+  <h1 id="logo" aria-label="velocity shop">velocity shop</h1>
   <button id="cog" aria-label="Settings">⚙</button>
 </header>
 <main id="app"></main>
+<canvas id="bg"></canvas><div id="cn"></div><div id="gr"></div>
+<div id="ld"><div class="dr l"></div><div class="dr r"></div><div class="lc"><div class="lrw"></div><div class="lt2"></div><div class="lb2"><i></i></div></div></div>
 <div id="toast"></div>
 <script>
 // ====== SET THIS to the public HTTPS address of your bot server (bot.py) ======
@@ -130,7 +202,7 @@ const store = (k, d) => { try { return localStorage.getItem(k) ?? d; } catch (e)
 const save = (k, v) => { try { localStorage.setItem(k, v); } catch (e) {} };
 const PRESETS = ["#ff3b30", "#ff9500", "#ffd60a", "#30d158", "#22d3ee", "#0a84ff", "#bf5af2", "#ff2d95"];
 const CATS = [["3d", "🧊", "c3d"], ["2d", "✨", "c2d"], ["outro", "🎞", "cout"]];
-const THEMES = [["ocean", "thOcean", "#22d3ee", "#3b82f6"], ["neon", "thNeon", "#c77dff", "#ff4fd8"], ["sunset", "thSunset", "#ff9f43", "#ff4d4d"], ["forest", "thForest", "#34e08a", "#12b5a6"], ["light", "thLight", "#e6f4ff", "#2563eb"]];
+const THEMES = [["crypt", "thCrypt", "#c9a455", "#a3243b"], ["ocean", "thOcean", "#6f93d6", "#c9a455"], ["neon", "thNeon", "#b98ad1", "#c2355a"], ["sunset", "thSunset", "#e0643f", "#8f1d2c"], ["forest", "thForest", "#6fc09a", "#2f7d6b"], ["light", "thLight", "#e9dfc7", "#8b1e2d"]];
 const LINKS = [["🎵 ᴠᴇʟᴏᴄɪᴛʏ", "https://www.tiktok.com/@velocity.vq"], ["🎵 ᴄᴏᴍᴇᴛ", "https://www.tiktok.com/@comet.szc"], ["📢 ᴠᴇʟᴏᴄɪᴛʏ x ᴄᴏᴍᴇᴛ", "https://t.me/velocityvq"],
   ["💬 ᴠᴇʟᴏᴄɪᴛʏ чат", "https://t.me/velocitychat"], ["🎬 clips velocity", "https://t.me/velocityclips"], ["🎮 Discord", "https://discord.gg/HxueU94Ygv"]];
 const T = {
@@ -141,7 +213,7 @@ en:{back:"← Back to main menu",order:"Order",soon:"Coming soon",fmt:"Format",p
  send:"Send review",none:"No reviews yet",invalid:"Invalid input",used:"Already used",bought:"Buy something first",auth:"Open this app from the bot",done:"Paid! You'll get a message from the bot.",saved:"Review saved",copy:"Copied",avg:"average",payWith:"Pay with",payStars:"⭐ Stars",payUsd:"💵 Dollars (Wallet)",usdWait:"Finish the payment in Wallet. The bot will message you when it is confirmed.",usdOff:"Dollar payments are not available",
  heroB:"After Effects",heroT:"Animated text watermarks",heroS:"Your name, animated and delivered right here in the chat.",f1:"🎞 PC .mov + mobile .mp4",f2:"✏️ Your own name",f3:"⭐ Pay with Stars",
  follow:"Follow us",more:"More",emptyT:"New designs are on the way",offline:"Shop not loaded. Open it from the bot (Discover my shop button), and check that the API address in index.html is correct and the bot is running.",retry:"Try again",
- settings:"Settings",theme:"Design",anim:"Animations",on:"On",off2:"Off",close:"Close",thOcean:"Ocean",thNeon:"Neon",thSunset:"Sunset",thForest:"Forest",thLight:"Light",
+ settings:"Settings",theme:"Design",anim:"Animations",on:"On",off2:"Off",close:"Close",thOcean:"Ocean",thNeon:"Neon",thSunset:"Sunset",thForest:"Forest",thLight:"Light",thCrypt:"Crypt",ambient:"Atmosphere",embers:"Drifting embers",candle:"Candlelight",grain:"Film grain",magnet:"Magnetic buttons",glow:"Cursor lantern",amb:"Ambient intensity",mot:"Motion intensity",
  c3d:"3D watermarks",c2d:"2D watermarks",cout:"Outros",designs:"designs",fromS:"from",tapFull:"Tap a video to view it full screen"},
 ru:{back:"← В главное меню",order:"Заказать",soon:"Скоро",fmt:"Формат",pc:"ПК (mov)",mob:"Мобильный (mp4)",both:"Оба",note:"⏳ Заказ может занять до 3 дней",buy:"Заказать",off:"скидка на весь магазин",
  name:"Имя для вашего водяного знака",namePh:"например, Velocity",nameReq:"Введите имя",color:"Цвет",custom:"Свой цвет",colorReq:"Выберите цвет",colorsTag:"Выбор цвета",
@@ -150,9 +222,9 @@ ru:{back:"← В главное меню",order:"Заказать",soon:"Ско�
  send:"Отправить отзыв",none:"Отзывов пока нет",invalid:"Неверный ввод",used:"Уже использовано",bought:"Сначала сделайте покупку",auth:"Откройте приложение из бота",done:"Оплачено! Бот пришлёт сообщение.",saved:"Отзыв сохранён",copy:"Скопировано",avg:"средняя",payWith:"Оплата",payStars:"⭐ Звёзды",payUsd:"💵 Доллары (Wallet)",usdWait:"Завершите оплату в Wallet. Бот напишет вам, когда платёж подтвердится.",usdOff:"Оплата долларами недоступна",
  heroB:"After Effects",heroT:"Анимированные водяные знаки",heroS:"Ваше имя в анимации, доставка прямо в этот чат.",f1:"🎞 ПК .mov + мобильный .mp4",f2:"✏️ Ваше имя",f3:"⭐ Оплата звёздами",
  follow:"Мы в соцсетях",more:"Ещё",emptyT:"Новые работы скоро появятся",offline:"Магазин не загрузился. Откройте его из бота (кнопка магазина), проверьте адрес API в index.html и что бот запущен.",retry:"Повторить",
- settings:"Настройки",theme:"Оформление",anim:"Анимации",on:"Вкл",off2:"Выкл",close:"Закрыть",thOcean:"Океан",thNeon:"Неон",thSunset:"Закат",thForest:"Лес",thLight:"Светлая",
+ settings:"Настройки",theme:"Оформление",anim:"Анимации",on:"Вкл",off2:"Выкл",close:"Закрыть",thOcean:"Океан",thNeon:"Неон",thSunset:"Закат",thForest:"Лес",thLight:"Светлая",thCrypt:"Склеп",ambient:"Атмосфера",embers:"Парящие искры",candle:"Свет свечей",grain:"Плёночное зерно",magnet:"Магнитные кнопки",glow:"Фонарь у курсора",amb:"Сила атмосферы",mot:"Сила движения",
  c3d:"3D водяные знаки",c2d:"2D водяные знаки",cout:"Аутро",designs:"работ",fromS:"от",tapFull:"Нажмите на видео для полного экрана"}};
-let L = store("l", tg.initDataUnsafe?.user?.language_code === "ru" ? "ru" : "en"), TH = store("th", "ocean"), AN = store("an", "1") === "1";
+let L = store("l", tg.initDataUnsafe?.user?.language_code === "ru" ? "ru" : "en"), TH = store("th", "crypt"), AN = store("an", "1") === "1";
 const t = k => T[L][k] || k;
 let S = null, P = [], view = "home", cat = "3d", R = {reviews: [], avg: null}, lastErr = "", failed = false;
 const $ = s => document.querySelector(s), app = $("#app");
@@ -167,7 +239,7 @@ const fmtDate = ms => new Date(ms * 1000).toLocaleString(L === "ru" ? "ru" : "en
 function toast(m, ms = 2200) { const e = $("#toast"); e.textContent = m; e.classList.add("on"); setTimeout(() => e.classList.remove("on"), ms); }
 function applyPrefs() {
   const r = document.documentElement; r.dataset.theme = TH; r.classList.toggle("calm", !AN);
-  try { const bg = getComputedStyle(r).getPropertyValue("--bg").trim(); tg.setHeaderColor(bg); tg.setBackgroundColor(bg); } catch (e) {}
+  try { const bg = getComputedStyle(r).getPropertyValue("--bg").trim(); tg.setHeaderColor(bg); tg.setBackgroundColor(bg); } catch (e) {} window.gx && gx.theme && gx.theme();
 }
 async function api(a, d = {}) {
   try {
@@ -178,7 +250,7 @@ async function api(a, d = {}) {
 function confetti() {
   if (document.documentElement.classList.contains("calm")) return;
   const box = document.createElement("div"); box.className = "cf"; document.body.append(box);
-  const cols = ["var(--acc)", "var(--acc2)", "var(--ok)", "#fff", "#ffd166"], rn = n => (Math.random() - .5) * n;
+  const cols = ["var(--acc)", "var(--acc2)", "var(--ok)", "#e8c76a", "#b3202f"], rn = n => (Math.random() - .5) * n;
   for (let i = 0; i < 40; i++) {
     const s = document.createElement("i"); s.style.cssText = `left:${50 + rn(20)}%;top:55%;background:${cols[i % 5]}`; box.append(s);
     s.animate([{transform: "translate(0,0) rotate(0)", opacity: 1}, {transform: `translate(${rn(340)}px,${-120 - Math.random() * 260}px) rotate(${Math.random() * 720}deg)`, opacity: 1, offset: .6},
@@ -266,18 +338,6 @@ function openOrder(id) {
   };
 }
 
-function openSettings() {
-  const el = document.createElement("div"); el.className = "sheet";
-  el.innerHTML = `<div><div class="grab"></div><h2>⚙ ${t("settings")}</h2><p class="mut">${t("theme")}</p>
-  <div class="themes">${THEMES.map(([k, n, a, b]) => `<button class="th ${k === TH ? "on" : ""}" data-k="${k}"><i class="sq" style="background:linear-gradient(135deg,${a},${b})"></i><span>${t(n)}</span></button>`).join("")}</div>
-  <p class="mut" style="margin-top:14px">${t("anim")}</p><button class="btn alt ${AN ? "on" : ""}" id="an" style="margin-top:6px">${AN ? "✓ " + t("on") : t("off2")}</button>
-  <button class="btn alt" style="margin-top:14px" id="x">${t("close")}</button></div>`;
-  document.body.append(el);
-  el.querySelectorAll(".th").forEach(b => b.onclick = () => { TH = b.dataset.k; save("th", TH); applyPrefs(); el.querySelectorAll(".th").forEach(x => x.classList.toggle("on", x === b)); enter(); draw(); });
-  $("#an").onclick = e => { AN = !AN; save("an", AN ? "1" : "0"); applyPrefs(); e.target.classList.toggle("on", AN); e.target.textContent = AN ? "✓ " + t("on") : t("off2"); };
-  $("#x").onclick = () => el.remove(); el.onclick = e => { if (e.target === el) el.remove(); };
-}
-
 function rew() {
   const wLeft = S.wexp > Date.now() / 1000, idx = [10, 20, 30, 40, 50].indexOf(S.wp);
   app.innerHTML = back() + `<div class="box"><h2>🎡 ${t("wheel")}</h2><p class="mut">${t("wheelInfo")}</p>
@@ -307,13 +367,101 @@ function rev() {
 async function sendRev() { const j = await api("review", {rating: $("#rt").value, text: $("#rx").value}); if (!j.err) { toast(t("saved")); confetti(); openRev(); } }
 
 for (const l of ["en", "ru"]) $("#" + l).onclick = () => { L = l; save("l", l); draw(); };
-$("#cog").onclick = openSettings;
 async function boot() {
   failed = false; draw(); await api("state"); failed = !S;
   if (S) { const j = await api("reviews"); R = {reviews: j.reviews || [], avg: j.avg}; }
   enter(); draw();
 }
 applyPrefs(); draw(); boot();
+</script>
+
+<script>
+/* ===== Gothic atmosphere layer ===== */
+const gx = {};
+const rose = (n, k0 = 0) => { let p = ""; for (let i = 0; i < 12; i++) p += `<path pathLength="1" style="--k:${k0 + i}" transform="rotate(${i * 30})" d="M0 -14Q15 -42 0 -72Q-15 -42 0 -14M0 -72V-92"/>`;
+  return `<svg viewBox="-100 -100 200 200" class="rose">${p}<circle pathLength="1" style="--k:${k0}" r="94"/><circle pathLength="1" style="--k:${k0 + 2}" r="74"/><circle pathLength="1" style="--k:${k0 + 4}" r="14"/><circle class="gl" r="9"/></svg>`; };
+const letters = (txt, cls) => [...txt].map((c, i) => `<b ${cls || 'class="lt"'} style="--i:${i}">${c === " " ? "&nbsp;" : c}</b>`).join("");
+let O = {emb: 1, can: 1, grn: 1, mag: 1, cur: 1, amb: 70, mot: 70};
+try { Object.assign(O, JSON.parse(store("go", "{}"))); } catch (e) {}
+function applyO() {
+  const c = document.documentElement.classList; c.toggle("no-can", !O.can); c.toggle("no-grn", !O.grn);
+  c.style; document.documentElement.style.setProperty("--amb", O.amb / 100); document.documentElement.style.setProperty("--mot", O.mot / 100); save("go", JSON.stringify(O));
+}
+$("#logo").innerHTML = rose("", 0).replace('class="rose"', 'class="rose" style="--k:0"') + letters("velocity shop");
+$(".lrw").innerHTML = rose("", 0); $(".lt2").innerHTML = letters("velocity shop", "");
+$(".lrw .rose").setAttribute("class", "");
+applyO();
+
+/* loader: doors open after the sequence has played */
+setTimeout(() => { $("#ld").classList.add("open"); document.body.classList.add("ready"); setTimeout(() => $("#ld").remove(), 2000); }, 2900);
+
+/* ambient canvas: fog lights morph per menu, embers, cursor lantern */
+(() => {
+  const cv = $("#bg"), cx = cv.getContext("2d");
+  const MO = {home: [150, 30, 55, .2, .12, .85, .85], cat3d: [45, 90, 175, .8, .2, .2, .8], cat2d: [150, 60, 160, .15, .3, .8, .7], catoutro: [225, 120, 40, .5, .9, .5, .1], rew: [205, 170, 70, .85, .15, .15, .9], rev: [90, 125, 150, .3, .85, .75, .2]};
+  let W, H, tc = [[201, 164, 85], [163, 36, 59]], cur = null, px = .5, py = .3, tx = .5, ty = .3, ps = [];
+  const mix = (a, b, k) => a.map((v, i) => v + (b[i] - v) * k);
+  gx.theme = () => { const s = getComputedStyle(document.documentElement); tc = ["--rgb", "--rgb2"].map(v => s.getPropertyValue(v).trim().split(/\s+/).map(Number)); };
+  gx.theme();
+  const size = () => { const d = Math.min(devicePixelRatio || 1, 1.5); W = innerWidth; H = innerHeight; cv.width = W * d; cv.height = H * d; cx.setTransform(d, 0, 0, d, 0, 0); };
+  size(); addEventListener("resize", size);
+  for (let i = 0; i < 46; i++) ps.push({x: Math.random(), y: Math.random(), r: .6 + Math.random() * 1.8, v: .015 + Math.random() * .04, p: Math.random() * 6.28, s: .3 + Math.random() * .7});
+  addEventListener("pointermove", e => { tx = e.clientX / W; ty = e.clientY / H; }, {passive: true});
+  const blob = (x, y, r, c, a) => { const g = cx.createRadialGradient(x, y, 0, x, y, r), k = c.map(Math.round).join(","); g.addColorStop(0, `rgba(${k},${a})`); g.addColorStop(1, `rgba(${k},0)`); cx.fillStyle = g; cx.fillRect(x - r, y - r, r * 2, r * 2); };
+  let last = 0;
+  const frame = t => {
+    requestAnimationFrame(frame); if (document.hidden || t - last < 30) return; const dt = (t - last) / 1000; last = t;
+    const m = MO[view === "cat" ? "cat" + cat : view] || MO.home, A = mix(tc[0], m.slice(0, 3), .42), B = mix(tc[1], m.slice(0, 3), .22);
+    const tg = [...A, ...B, m[3], m[4], m[5], m[6]]; if (!cur) cur = tg.slice(); for (let i = 0; i < 10; i++) cur[i] += (tg[i] - cur[i]) * Math.min(1, dt * 2.2);
+    const calm = document.documentElement.classList.contains("calm"), I = O.amb / 100, T = calm ? 0 : t, R = Math.max(W, H);
+    cx.globalCompositeOperation = "source-over"; cx.clearRect(0, 0, W, H); cx.globalCompositeOperation = "lighter";
+    blob(cur[6] * W + Math.sin(T / 4200) * 70 * O.mot / 70, cur[7] * H + Math.cos(T / 5100) * 60, R * .75, cur.slice(0, 3), .12 + I * .3);
+    blob(cur[8] * W + Math.cos(T / 4700) * 80, cur[9] * H + Math.sin(T / 3900) * 70, R * .8, cur.slice(3, 6), .1 + I * .28);
+    if (O.cur && !calm) { px += (tx - px) * Math.min(1, dt * 4); py += (ty - py) * Math.min(1, dt * 4); blob(px * W, py * H, 260, tc[0], .1 + I * .12 + Math.sin(t / 230) * .015); }
+    if (O.emb && !calm) { const n = Math.round(ps.length * I); for (let i = 0; i < n; i++) { const p = ps[i]; p.y -= p.v * dt * (O.mot / 70); if (p.y < -.05) { p.y = 1.05; p.x = Math.random(); }
+      const x = (p.x + Math.sin(t / 2200 + p.p) * .02) * W, a = p.s * (.35 + .65 * Math.abs(Math.sin(t / 900 + p.p))) * I; cx.fillStyle = `rgba(${mix(tc[0], [255, 235, 190], .5).map(Math.round)},${a})`; cx.beginPath(); cx.arc(x, p.y * H, p.r, 0, 6.28); cx.fill(); } }
+  };
+  requestAnimationFrame(frame);
+})();
+
+/* magnetic pull + ripples */
+const MG = ".btn,.big,#cog,.th";
+let mg = null;
+if (matchMedia("(hover:hover)").matches) addEventListener("pointermove", e => {
+  const b = e.target.closest && e.target.closest(MG); if (mg && mg !== b) { mg.style.setProperty("--mx", "0px"); mg.style.setProperty("--my", "0px"); mg = null; }
+  if (b && O.mag && !document.documentElement.classList.contains("calm")) { const r = b.getBoundingClientRect(), k = .16 * O.mot / 70; b.style.setProperty("--mx", (e.clientX - r.left - r.width / 2) * k + "px"); b.style.setProperty("--my", (e.clientY - r.top - r.height / 2) * k + "px"); mg = b; }
+}, {passive: true});
+addEventListener("pointerdown", e => {
+  const b = e.target.closest && e.target.closest(".btn,.big,.th,.links button,.lang button,#cog"); if (!b || document.documentElement.classList.contains("calm")) return;
+  const r = b.getBoundingClientRect(), d = Math.max(r.width, r.height) * 2.4, s = document.createElement("span"); s.className = "rip";
+  s.style.cssText = `left:${e.clientX - r.left}px;top:${e.clientY - r.top}px;width:${d}px;height:${d}px`; b.append(s); s.onanimationend = () => s.remove();
+}, {passive: true});
+
+/* cinematic text reveals, re-run after every screen draw */
+const io = new IntersectionObserver(es => es.forEach(x => { if (x.isIntersecting) { x.target.classList.add("in"); io.unobserve(x.target); } }), {threshold: .2});
+const _draw = draw;
+draw = function () { _draw(); document.querySelectorAll(".hero h2,.hero p,.hero .badge,.box h2,.ptitle,.big b,.sec,.hint").forEach((e, i) => { e.classList.add("rv"); e.style.setProperty("--i", Math.min(i, 9)); io.observe(e); });
+  setTimeout(() => document.querySelectorAll(".rv:not(.in)").forEach(e => e.classList.add("in")), 1800); };
+draw();
+
+/* settings: original theme + animation controls kept, new atmosphere controls added */
+function openSettings() {
+  const el = document.createElement("div"), sw = (k, l) => `<button class="tg ${O[k] ? "on" : ""}" data-o="${k}"><span>${t(l)}</span><i></i></button>`;
+  el.className = "sheet";
+  el.innerHTML = `<div><div class="grab"></div><h2>⚙ ${t("settings")}</h2><p class="mut">${t("theme")}</p>
+  <div class="themes">${THEMES.map(([k, n, a, b]) => `<button class="th ${k === TH ? "on" : ""}" data-k="${k}"><i class="sq" style="background:linear-gradient(135deg,${a},${b})"></i><span>${t(n)}</span></button>`).join("")}</div>
+  <p class="mut" style="margin-top:14px">${t("anim")}</p><button class="btn alt ${AN ? "on" : ""}" id="an" style="margin-top:6px">${AN ? "✓ " + t("on") : t("off2")}</button>
+  <p class="mut" style="margin-top:14px">${t("ambient")}</p>${sw("emb", "embers")}${sw("can", "candle")}${sw("grn", "grain")}${sw("cur", "glow")}${sw("mag", "magnet")}
+  <label class="rg">${t("amb")}<input type="range" id="ra" min="0" max="100" value="${O.amb}"></label><label class="rg">${t("mot")}<input type="range" id="rm" min="0" max="100" value="${O.mot}"></label>
+  <button class="btn alt" style="margin-top:16px" id="x">${t("close")}</button></div>`;
+  document.body.append(el);
+  el.querySelectorAll(".th").forEach(b => b.onclick = () => { TH = b.dataset.k; save("th", TH); applyPrefs(); el.querySelectorAll(".th").forEach(x => x.classList.toggle("on", x === b)); enter(); draw(); });
+  $("#an").onclick = e => { AN = !AN; save("an", AN ? "1" : "0"); applyPrefs(); e.target.classList.toggle("on", AN); e.target.textContent = AN ? "✓ " + t("on") : t("off2"); };
+  el.querySelectorAll(".tg").forEach(b => b.onclick = () => { O[b.dataset.o] = O[b.dataset.o] ? 0 : 1; b.classList.toggle("on", !!O[b.dataset.o]); applyO(); });
+  $("#ra").oninput = e => { O.amb = +e.target.value; applyO(); }; $("#rm").oninput = e => { O.mot = +e.target.value; applyO(); };
+  $("#x").onclick = () => el.remove(); el.onclick = e => { if (e.target === el) el.remove(); };
+}
+$("#cog").onclick = openSettings;
 </script>
 </body>
 </html>
